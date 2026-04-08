@@ -72,5 +72,25 @@
     "officeType": "private",
     "notes": "test",
     "createdAt": "2026-04-08T13:18:06.510Z"
+  },
+  {
+    "type": "offer",
+    "name": "Macavei Bogdan",
+    "email": "macaveibi@gmail.com",
+    "phone": "0731624826",
+    "officeType": "Private Desk",
+    "teamSize": "1",
+    "message": "Desks: 1 | Start: 2026-04-24 | End: 2026-04-25.",
+    "createdAt": "2026-04-08T15:52:08.398Z"
+  },
+  {
+    "type": "offer",
+    "name": "Macavei Bogdan",
+    "email": "macaveibi@gmail.com",
+    "phone": "0731624826",
+    "officeType": "Conference Room",
+    "teamSize": "",
+    "message": "Date: 2026-04-08 | Start: 09:00 | Duration: 2 hours.",
+    "createdAt": "2026-04-08T16:06:55.371Z"
   }
 ]

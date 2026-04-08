@@ -151,21 +151,20 @@ document.querySelectorAll('img').forEach(img => {
           <div class="form-group">
             <select name="officeType">
               <option value="">Interested in… (optional)</option>
-              <option value="private">Private Office – 1 desk</option>
-              <option value="small">Small Office – 2 desks</option>
-              <option value="medium">Medium Office – 4 desks</option>
-              <option value="large">Large Office – 8 desks</option>
+              <option value="Private Desk – 6 desks">Private Desk – 6 desks</option>
+              <option value="Private Office – 1–2 desks">Private Office – 1–2 desks</option>
+              <option value="Small Office – 4–5 desks">Small Office – 4–5 desks</option>
+              <option value="Large Office – 9–12 desks">Large Office – 9–12 desks</option>
             </select>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <input type="date" name="date" required min="${getTodayStr()}" />
+            <input type="date" name="date" required id="mainTourDate" min="${getTodayStr()}" />
           </div>
           <div class="form-group">
             <select name="time" required>
               <option value="">Preferred Time *</option>
-              <option value="09:00">09:00 AM</option>
               <option value="10:00">10:00 AM</option>
               <option value="11:00">11:00 AM</option>
               <option value="12:00">12:00 PM</option>
@@ -173,7 +172,6 @@ document.querySelectorAll('img').forEach(img => {
               <option value="14:00">02:00 PM</option>
               <option value="15:00">03:00 PM</option>
               <option value="16:00">04:00 PM</option>
-              <option value="17:00">05:00 PM</option>
             </select>
           </div>
         </div>
@@ -188,6 +186,8 @@ document.querySelectorAll('img').forEach(img => {
 
   // Open modal
   function openModal() {
+    const dateInput = document.getElementById('mainTourDate');
+    dateInput.value = getTodayStr();
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
     modal.querySelector('[name="name"]').focus();
@@ -264,26 +264,16 @@ document.querySelectorAll('img').forEach(img => {
           <div class="form-group"><input type="email" name="email" placeholder="Email Address *" required /></div>
         </div>
         <div class="form-row">
-          <div class="form-group"><input type="tel" name="phone" placeholder="Phone (optional)" /></div>
+          <div class="form-group"><input type="tel" name="phone" placeholder="Phone *" required /></div>
           <div class="form-group">
             <select name="officeType">
               <option value="">Office type (optional)</option>
-              <option value="private">Private Office – 1 desk</option>
-              <option value="small">Small Office – 2 desks</option>
-              <option value="medium">Medium Office – 4 desks</option>
-              <option value="large">Large Office – 8 desks</option>
+              <option value="Private Desk – 6 desks">Private Desk – 6 desks</option>
+              <option value="Private Office – 1–2 desks">Private Office – 1–2 desks</option>
+              <option value="Small Office – 4–5 desks">Small Office – 4–5 desks</option>
+              <option value="Large Office – 9–12 desks">Large Office – 9–12 desks</option>
             </select>
           </div>
-        </div>
-        <div class="form-group">
-          <select name="teamSize">
-            <option value="">Team size (optional)</option>
-            <option value="1">Just me</option>
-            <option value="2-3">2–3 people</option>
-            <option value="4-6">4–6 people</option>
-            <option value="7-10">7–10 people</option>
-            <option value="10+">10+ people</option>
-          </select>
         </div>
         <div class="form-group">
           <textarea name="message" rows="3" placeholder="Any specific requirements or questions…"></textarea>
@@ -319,8 +309,8 @@ document.querySelectorAll('img').forEach(img => {
       message:    offerForm.querySelector('[name="message"]').value.trim(),
     };
 
-    if (!body.name || !body.email) {
-      return showMsg(offerFormMsg, 'Name and email are required.', 'error');
+    if (!body.name || !body.email || !body.phone) {
+      return showMsg(offerFormMsg, 'Name, email and phone are required.', 'error');
     }
 
     const ok = await submitForm('/api/request-offer', body, offerForm, offerFormMsg,

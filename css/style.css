@@ -192,7 +192,7 @@ p { color: var(--text-muted); font-size: 0.975rem; line-height: 1.7; }
 }
 
 .navbar.scrolled .logo {
-  color: #640017;
+  color: #4a0011;
 }
 
 .nav-inner {
@@ -228,9 +228,9 @@ p { color: var(--text-muted); font-size: 0.975rem; line-height: 1.7; }
   transition: filter var(--transition);
 }
 
-/* Navbar scrolled (fundal alb) → logo #640017 */
+/* Navbar scrolled (fundal alb) → logo #4a0011 */
 .navbar.scrolled .logo-mark {
-  filter: invert(8%) sepia(80%) saturate(6000%) hue-rotate(332deg) brightness(75%) contrast(110%);
+  filter: brightness(0) saturate(100%) invert(10%) sepia(98%) saturate(4000%) hue-rotate(330deg) brightness(58%) contrast(115%);
 }
 
 /* Footer (fundal burgundy) → logo alb */
@@ -762,6 +762,16 @@ a.office-card:hover .office-link { text-decoration: underline; }
 .form-group textarea:focus {
   border-color: var(--burgundy);
   box-shadow: 0 0 0 3px rgba(100, 0, 23, 0.08);
+}
+
+.date-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-light);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .form-msg {

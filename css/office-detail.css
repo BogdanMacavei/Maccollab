@@ -195,6 +195,37 @@
   line-height: 1;
 }
 
+.sidebar-price {
+  font-family: var(--ff-serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--burgundy);
+  line-height: 1;
+  margin-top: 2px;
+}
+.sidebar-price span {
+  font-size: 0.85rem;
+  font-weight: 400;
+  font-family: var(--ff-sans);
+  color: var(--text-muted);
+}
+
+.offer-office-type-display {
+  margin-bottom: 16px;
+}
+.offer-office-badge {
+  display: inline-block;
+  background: var(--cream);
+  color: var(--burgundy);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--burgundy);
+}
+
 .sidebar-note {
   font-size: 0.85rem;
   color: var(--text-muted);
