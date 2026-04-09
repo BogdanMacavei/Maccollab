@@ -2,7 +2,7 @@
    MACCOLLAB — MAIN JAVASCRIPT
    ══════════════════════════════════════════════════════ */
 
-const API = '';   // same origin via Express
+emailjs.init('pCeuUl7FpFgAbdqZO');
 
 /* ─── NAVBAR: scroll state & hamburger ─────────────── */
 (function () {
@@ -114,7 +114,9 @@ document.querySelectorAll('img').forEach(img => {
       return showMsg(formMsg, 'Please fill in all required fields.', 'error');
     }
 
-    await submitForm('/api/contact', body, form, formMsg,
+    const subject = `New Contact from ${body.name} – Maccollab`;
+    const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone || '—'}<br><hr><strong>Message:</strong><br>${body.message.replace(/\n/g, '<br>')}`;
+    await submitForm(subject, message, body.email, form, formMsg,
       'Thank you! We will get back to you shortly.'
     );
   });
@@ -231,7 +233,9 @@ document.querySelectorAll('img').forEach(img => {
       return showMsg(tourFormMsg, 'Please fill in all required fields.', 'error');
     }
 
-    const ok = await submitForm('/api/book-tour', body, tourForm, tourFormMsg,
+    const subject = `New Tour Booking from ${body.name} – Maccollab`;
+    const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone || '—'}<br><strong>Interested In:</strong> ${body.officeType || '—'}<br><strong>Date:</strong> ${body.date}<br><strong>Time:</strong> ${body.time}<br><strong>Notes:</strong> ${body.notes || '—'}`;
+    const ok = await submitForm(subject, message, body.email, tourForm, tourFormMsg,
       'Tour booked! We will confirm your visit by email.'
     );
     if (ok) setTimeout(closeModal, 2800);
@@ -305,7 +309,6 @@ document.querySelectorAll('img').forEach(img => {
       email:      offerForm.querySelector('[name="email"]').value.trim(),
       phone:      offerForm.querySelector('[name="phone"]').value.trim(),
       officeType: offerForm.querySelector('[name="officeType"]').value,
-      teamSize:   offerForm.querySelector('[name="teamSize"]').value,
       message:    offerForm.querySelector('[name="message"]').value.trim(),
     };
 
@@ -313,7 +316,9 @@ document.querySelectorAll('img').forEach(img => {
       return showMsg(offerFormMsg, 'Name, email and phone are required.', 'error');
     }
 
-    const ok = await submitForm('/api/request-offer', body, offerForm, offerFormMsg,
+    const subject = `New Offer Request from ${body.name} – Maccollab`;
+    const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Office Type:</strong> ${body.officeType || '—'}<br><strong>Notes:</strong> ${body.message || '—'}`;
+    const ok = await submitForm(subject, message, body.email, offerForm, offerFormMsg,
       'Thank you! We will prepare a custom offer for you.'
     );
     if (ok) setTimeout(closeModal, 2800);
@@ -328,33 +333,28 @@ function showMsg(el, text, type) {
   el.className   = 'form-msg ' + type;
 }
 
-async function submitForm(endpoint, body, form, msgEl, successText) {
+async function submitForm(subject, messageHtml, replyEmail, form, msgEl, successText) {
   const btn = form.querySelector('[type="submit"]');
+  const originalText = btn.textContent;
   btn.disabled    = true;
   btn.textContent = 'Sending…';
 
   try {
-    const res  = await fetch(API + endpoint, {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify(body),
+    await emailjs.send('service_x66txtc', 'na1fxhw', {
+      subject: subject,
+      message: messageHtml,
+      email:   replyEmail,
     });
-    const data = await res.json();
-
-    if (data.ok) {
-      showMsg(msgEl, successText, 'success');
-      form.reset();
-      return true;
-    } else {
-      showMsg(msgEl, data.message || 'Something went wrong. Please try again.', 'error');
-      return false;
-    }
-  } catch {
-    showMsg(msgEl, 'Network error. Please check your connection and try again.', 'error');
+    showMsg(msgEl, successText, 'success');
+    form.reset();
+    return true;
+  } catch (err) {
+    console.error('EmailJS error:', err);
+    showMsg(msgEl, 'Something went wrong. Please try again.', 'error');
     return false;
   } finally {
     btn.disabled    = false;
-    btn.textContent = btn.dataset.label || btn.textContent.replace('Sending…', btn.dataset.defaultText || 'Send');
+    btn.textContent = originalText;
   }
 }
 

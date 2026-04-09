@@ -1,3 +1,5 @@
+emailjs.init('pCeuUl7FpFgAbdqZO');
+
 /* ── Gallery photo switcher ── */
 function setMain(thumb) {
   document.getElementById('mainPhoto').src = thumb.src;
@@ -118,13 +120,14 @@ document.getElementById('navbar').classList.add('scrolled');
     }
     const btn = this.querySelector('[type="submit"]');
     btn.disabled = true; btn.textContent = 'Sending…';
+    const subject = `New Tour Booking from ${body.name} – Maccollab`;
+    const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone || '—'}<br><strong>Interested In:</strong> ${body.officeType || '—'}<br><strong>Date:</strong> ${body.date}<br><strong>Time:</strong> ${body.time}<br><strong>Notes:</strong> ${body.notes || '—'}`;
     try {
-      const res = await fetch('/api/book-tour', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
-      const data = await res.json();
-      msgEl.textContent = data.message;
-      msgEl.className = 'form-msg ' + (data.ok ? 'success' : 'error');
-      if (data.ok) { this.reset(); setTimeout(closeModal, 2500); }
-    } catch { msgEl.textContent = 'Network error. Please try again.'; msgEl.className = 'form-msg error'; }
+      await emailjs.send('service_x66txtc', 'na1fxhw', { subject, message, email: body.email });
+      msgEl.textContent = 'Tour booked! We will confirm your visit by email.';
+      msgEl.className = 'form-msg success';
+      this.reset(); setTimeout(closeModal, 2500);
+    } catch (err) { console.error(err); msgEl.textContent = 'Something went wrong. Please try again.'; msgEl.className = 'form-msg error'; }
     finally { btn.disabled = false; btn.textContent = 'Confirm Booking'; }
   });
 })();
@@ -198,7 +201,6 @@ document.getElementById('navbar').classList.add('scrolled');
       email:      this.querySelector('[name="email"]').value.trim(),
       phone:      this.querySelector('[name="phone"]').value.trim(),
       officeType: this.querySelector('[name="officeType"]').value,
-      teamSize:   this.querySelector('[name="teamSize"]').value,
       message:    this.querySelector('[name="message"]').value.trim(),
     };
     if (!body.name || !body.email || !body.phone) {
@@ -208,13 +210,14 @@ document.getElementById('navbar').classList.add('scrolled');
     }
     const btn = this.querySelector('[type="submit"]');
     btn.disabled = true; btn.textContent = 'Sending…';
+    const subject = `New Offer Request from ${body.name} – Maccollab`;
+    const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Office Type:</strong> ${body.officeType || '—'}<br><strong>Notes:</strong> ${body.message || '—'}`;
     try {
-      const res  = await fetch('/api/request-offer', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
-      const data = await res.json();
-      msgEl.textContent = data.message;
-      msgEl.className = 'form-msg ' + (data.ok ? 'success' : 'error');
-      if (data.ok) { this.reset(); setTimeout(closeOfferModal, 2500); }
-    } catch { msgEl.textContent = 'Network error. Please try again.'; msgEl.className = 'form-msg error'; }
+      await emailjs.send('service_x66txtc', 'na1fxhw', { subject, message, email: body.email });
+      msgEl.textContent = 'Thank you! We will prepare a custom offer for you.';
+      msgEl.className = 'form-msg success';
+      this.reset(); setTimeout(closeOfferModal, 2500);
+    } catch (err) { console.error(err); msgEl.textContent = 'Something went wrong. Please try again.'; msgEl.className = 'form-msg error'; }
     finally { btn.disabled = false; btn.textContent = 'Send Offer Request'; }
   });
 })();
@@ -328,13 +331,16 @@ document.getElementById('navbar').classList.add('scrolled');
     }
     const btn = this.querySelector('[type="submit"]');
     btn.disabled = true; btn.textContent = 'Sending…';
+    const subject = `New Desk Booking from ${body.name} – Maccollab`;
+    const deskStart = this.querySelector('[name="startDate"]').value;
+    const deskEnd   = this.querySelector('[name="endDate"]').value;
+    const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Desks:</strong> ${this.querySelector('[name="deskCount"]').value}<br><strong>Start Date:</strong> ${deskStart}<br><strong>End Date:</strong> ${deskEnd}<br><strong>Notes:</strong> ${this.querySelector('[name="message"]').value.trim() || '—'}`;
     try {
-      const res  = await fetch('/api/request-offer', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
-      const data = await res.json();
-      msgEl.textContent = data.ok ? 'Desk booked! We will confirm your reservation by email.' : data.message;
-      msgEl.className = 'form-msg ' + (data.ok ? 'success' : 'error');
-      if (data.ok) { this.reset(); setTimeout(closeDeskModal, 2500); }
-    } catch { msgEl.textContent = 'Network error. Please try again.'; msgEl.className = 'form-msg error'; }
+      await emailjs.send('service_x66txtc', 'na1fxhw', { subject, message, email: body.email });
+      msgEl.textContent = 'Desk booked! We will confirm your reservation by email.';
+      msgEl.className = 'form-msg success';
+      this.reset(); setTimeout(closeDeskModal, 2500);
+    } catch (err) { console.error(err); msgEl.textContent = 'Something went wrong. Please try again.'; msgEl.className = 'form-msg error'; }
     finally { btn.disabled = false; btn.textContent = 'Book Desk'; }
   });
 })();
@@ -437,13 +443,14 @@ document.getElementById('navbar').classList.add('scrolled');
     }
     const btn = this.querySelector('[type="submit"]');
     btn.disabled = true; btn.textContent = 'Sending…';
+    const subject = `Conference Room Booking from ${body.name} – Maccollab`;
+    const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Date:</strong> ${this.querySelector('[name="confDate"]').value}<br><strong>Start Time:</strong> ${this.querySelector('[name="confTime"]').value}<br><strong>Duration:</strong> ${this.querySelector('[name="duration"]').value}<br><strong>Notes:</strong> ${this.querySelector('[name="notes"]').value.trim() || '—'}`;
     try {
-      const res  = await fetch('/api/request-offer', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
-      const data = await res.json();
-      msgEl.textContent = data.ok ? 'Booking received! We will confirm by email.' : data.message;
-      msgEl.className = 'form-msg ' + (data.ok ? 'success' : 'error');
-      if (data.ok) { this.reset(); setTimeout(closeConfModal, 2500); }
-    } catch { msgEl.textContent = 'Network error. Please try again.'; msgEl.className = 'form-msg error'; }
+      await emailjs.send('service_x66txtc', 'na1fxhw', { subject, message, email: body.email });
+      msgEl.textContent = 'Booking received! We will confirm by email.';
+      msgEl.className = 'form-msg success';
+      this.reset(); setTimeout(closeConfModal, 2500);
+    } catch (err) { console.error(err); msgEl.textContent = 'Something went wrong. Please try again.'; msgEl.className = 'form-msg error'; }
     finally { btn.disabled = false; btn.textContent = 'Book Conference Room'; }
   });
 })();
