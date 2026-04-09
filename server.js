@@ -48,12 +48,13 @@ async function sendEmail(subject, html) {
     console.log('   Subject:', subject);
     return;
   }
-  await transporter.sendMail({
+  const info = await transporter.sendMail({
     from: `"Maccollab Website" <${process.env.SMTP_USER}>`,
     to:   process.env.EMAIL_TO,
     subject,
     html,
   });
+  console.log(`\n✉️   Email sent → ${process.env.EMAIL_TO} | ID: ${info.messageId}`);
 }
 
 /* ─── MIDDLEWARE ─────────────────────────────────────── */
