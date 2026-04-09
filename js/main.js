@@ -350,7 +350,8 @@ async function submitForm(subject, messageHtml, replyEmail, form, msgEl, success
     return true;
   } catch (err) {
     console.error('EmailJS error:', err);
-    showMsg(msgEl, 'Something went wrong. Please try again.', 'error');
+    const detail = err && (err.text || err.message || JSON.stringify(err));
+    showMsg(msgEl, `Error: ${detail}`, 'error');
     return false;
   } finally {
     btn.disabled    = false;
