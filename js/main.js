@@ -340,7 +340,7 @@ async function submitForm(subject, messageHtml, replyEmail, form, msgEl, success
   btn.textContent = 'Sending…';
 
   try {
-    await emailjs.send('service_x66txtc', 'na1fxhw', {
+    await emailjs.send('service_160291d', 'na1fxhw', {
       subject: subject,
       message: messageHtml,
       email:   replyEmail,
@@ -350,8 +350,7 @@ async function submitForm(subject, messageHtml, replyEmail, form, msgEl, success
     return true;
   } catch (err) {
     console.error('EmailJS error:', err);
-    const detail = err && (err.text || err.message || JSON.stringify(err));
-    showMsg(msgEl, `Error: ${detail}`, 'error');
+    showMsg(msgEl, 'Something went wrong. Please try again.', 'error');
     return false;
   } finally {
     btn.disabled    = false;

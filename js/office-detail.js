@@ -123,7 +123,7 @@ document.getElementById('navbar').classList.add('scrolled');
     const subject = `New Tour Booking from ${body.name} – Maccollab`;
     const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone || '—'}<br><strong>Interested In:</strong> ${body.officeType || '—'}<br><strong>Date:</strong> ${body.date}<br><strong>Time:</strong> ${body.time}<br><strong>Notes:</strong> ${body.notes || '—'}`;
     try {
-      await emailjs.send('service_x66txtc', 'na1fxhw', { subject, message, email: body.email });
+      await emailjs.send('service_160291d', 'na1fxhw', { subject, message, email: body.email });
       msgEl.textContent = 'Tour booked! We will confirm your visit by email.';
       msgEl.className = 'form-msg success';
       this.reset(); setTimeout(closeModal, 2500);
@@ -213,7 +213,7 @@ document.getElementById('navbar').classList.add('scrolled');
     const subject = `New Offer Request from ${body.name} – Maccollab`;
     const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Office Type:</strong> ${body.officeType || '—'}<br><strong>Notes:</strong> ${body.message || '—'}`;
     try {
-      await emailjs.send('service_x66txtc', 'na1fxhw', { subject, message, email: body.email });
+      await emailjs.send('service_160291d', 'na1fxhw', { subject, message, email: body.email });
       msgEl.textContent = 'Thank you! We will prepare a custom offer for you.';
       msgEl.className = 'form-msg success';
       this.reset(); setTimeout(closeOfferModal, 2500);
@@ -336,7 +336,7 @@ document.getElementById('navbar').classList.add('scrolled');
     const deskEnd   = this.querySelector('[name="endDate"]').value;
     const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Desks:</strong> ${this.querySelector('[name="deskCount"]').value}<br><strong>Start Date:</strong> ${deskStart}<br><strong>End Date:</strong> ${deskEnd}<br><strong>Notes:</strong> ${this.querySelector('[name="message"]').value.trim() || '—'}`;
     try {
-      await emailjs.send('service_x66txtc', 'na1fxhw', { subject, message, email: body.email });
+      await emailjs.send('service_160291d', 'na1fxhw', { subject, message, email: body.email });
       msgEl.textContent = 'Desk booked! We will confirm your reservation by email.';
       msgEl.className = 'form-msg success';
       this.reset(); setTimeout(closeDeskModal, 2500);
@@ -446,7 +446,7 @@ document.getElementById('navbar').classList.add('scrolled');
     const subject = `Conference Room Booking from ${body.name} – Maccollab`;
     const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Date:</strong> ${this.querySelector('[name="confDate"]').value}<br><strong>Start Time:</strong> ${this.querySelector('[name="confTime"]').value}<br><strong>Duration:</strong> ${this.querySelector('[name="duration"]').value}<br><strong>Notes:</strong> ${this.querySelector('[name="notes"]').value.trim() || '—'}`;
     try {
-      await emailjs.send('service_x66txtc', 'na1fxhw', { subject, message, email: body.email });
+      await emailjs.send('service_160291d', 'na1fxhw', { subject, message, email: body.email });
       msgEl.textContent = 'Booking received! We will confirm by email.';
       msgEl.className = 'form-msg success';
       this.reset(); setTimeout(closeConfModal, 2500);
