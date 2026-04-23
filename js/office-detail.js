@@ -1,11 +1,42 @@
 emailjs.init('pCeuUl7FpFgAbdqZO');
 
 /* ── Gallery photo switcher ── */
+const _thumbs = Array.from(document.querySelectorAll('.thumb'));
+let _galleryIdx = 0;
+
 function setMain(thumb) {
+  _galleryIdx = _thumbs.indexOf(thumb);
   document.getElementById('mainPhoto').src = thumb.src;
-  document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+  _thumbs.forEach(t => t.classList.remove('active'));
   thumb.classList.add('active');
 }
+
+function _galleryNav(dir) {
+  _galleryIdx = (_galleryIdx + dir + _thumbs.length) % _thumbs.length;
+  setMain(_thumbs[_galleryIdx]);
+}
+
+(function () {
+  const galleryMain = document.querySelector('.gallery-main');
+  if (!galleryMain || _thumbs.length < 2) return;
+
+  const arrowSvg = (d) => `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="${d === -1 ? '15 18 9 12 15 6' : '9 18 15 12 9 6'}"/></svg>`;
+
+  const prev = document.createElement('button');
+  prev.className = 'gallery-arrow gallery-prev';
+  prev.setAttribute('aria-label', 'Previous photo');
+  prev.innerHTML = arrowSvg(-1);
+  prev.addEventListener('click', () => _galleryNav(-1));
+
+  const next = document.createElement('button');
+  next.className = 'gallery-arrow gallery-next';
+  next.setAttribute('aria-label', 'Next photo');
+  next.innerHTML = arrowSvg(1);
+  next.addEventListener('click', () => _galleryNav(1));
+
+  galleryMain.appendChild(prev);
+  galleryMain.appendChild(next);
+})();
 
 /* ── Navbar scroll (always scrolled on detail pages) ── */
 document.getElementById('navbar').classList.add('scrolled');
