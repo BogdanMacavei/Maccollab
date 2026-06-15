@@ -232,6 +232,33 @@
   color: var(--text-muted);
 }
 
+.sidebar-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 6px;
+  margin-bottom: 2px;
+}
+
+.sidebar-price-item {
+  font-family: var(--ff-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--burgundy);
+}
+
+.sidebar-price-item small {
+  font-size: 0.78rem;
+  font-weight: 400;
+  font-family: var(--ff-sans);
+  color: var(--text-muted);
+}
+
+.sidebar-price-sep {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
 .offer-office-type-display {
   margin-bottom: 16px;
 }
