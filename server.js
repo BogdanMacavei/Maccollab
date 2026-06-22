@@ -60,9 +60,14 @@ async function sendEmail(subject, html) {
 
 /* ─── GOOGLE CALENDAR ────────────────────────────────── */
 function getCalendarClient() {
-  const credFile = path.join(__dirname, process.env.GOOGLE_CREDENTIALS_FILE || 'google-credentials.json');
-  if (!fs.existsSync(credFile)) return null;
-  const creds = JSON.parse(fs.readFileSync(credFile, 'utf8'));
+  let creds;
+  if (process.env.GOOGLE_CREDENTIALS_JSON) {
+    creds = JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON);
+  } else {
+    const credFile = path.join(__dirname, process.env.GOOGLE_CREDENTIALS_FILE || 'google-credentials.json');
+    if (!fs.existsSync(credFile)) return null;
+    creds = JSON.parse(fs.readFileSync(credFile, 'utf8'));
+  }
   const auth = new google.auth.GoogleAuth({
     credentials: creds,
     scopes: ['https://www.googleapis.com/auth/calendar'],

@@ -1,8 +1,12 @@
 emailjs.init('pCeuUl7FpFgAbdqZO');
 
+const MACCOLLAB_API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:3000'
+  : 'https://maccollab-api.onrender.com';
+
 async function postToServer(endpoint, data) {
   try {
-    await fetch(endpoint, {
+    await fetch(MACCOLLAB_API + endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),

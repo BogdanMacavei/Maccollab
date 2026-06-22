@@ -648,8 +648,12 @@ function closeSuccessPopup() {
   if (popup) { popup.classList.remove('open'); document.body.style.overflow = ''; }
 }
 
+const MACCOLLAB_API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:3000'
+  : 'https://maccollab-api.onrender.com';
+
 async function postToServer(endpoint, data) {
-  const url = 'http://localhost:3000' + endpoint;
+  const url = MACCOLLAB_API + endpoint;
   console.log('[Maccollab] postToServer →', url, data);
   try {
     const res = await fetch(url, {
