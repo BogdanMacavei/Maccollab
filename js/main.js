@@ -648,22 +648,35 @@ function closeSuccessPopup() {
   if (popup) { popup.classList.remove('open'); document.body.style.overflow = ''; }
 }
 
-const MACCOLLAB_API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-  ? 'http://localhost:3000'
-  : 'https://maccollab-api.onrender.com';
+const APPS_SCRIPT_URL = 'REPLACE_WITH_APPS_SCRIPT_URL';
+const IS_LOCAL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
 async function postToServer(endpoint, data) {
-  const url = MACCOLLAB_API + endpoint;
-  console.log('[Maccollab] postToServer →', url, data);
+  const type = endpoint.replace('/api/book-', '').replace('/api/', '');
+  const payload = { ...data, endpoint: type };
+
+  if (IS_LOCAL) {
+    try {
+      const res = await fetch('http://localhost:3000' + endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json();
+      console.log('[Maccollab] local server:', json);
+    } catch (err) { console.warn('[Maccollab] local server not reachable:', err.message); }
+    return;
+  }
+
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'REPLACE_WITH_APPS_SCRIPT_URL') return;
   try {
-    const res = await fetch(url, {
+    await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload),
     });
-    const json = await res.json();
-    console.log('[Maccollab] server response:', json);
-  } catch (err) { console.warn('[Maccollab] server not reachable:', err.message); }
+  } catch (err) { console.warn('[Maccollab] Apps Script error:', err.message); }
 }
 
 async function submitForm(subject, messageHtml, replyEmail, form, msgEl, successText) {

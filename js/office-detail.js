@@ -1,17 +1,32 @@
 emailjs.init('pCeuUl7FpFgAbdqZO');
 
-const MACCOLLAB_API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-  ? 'http://localhost:3000'
-  : 'https://maccollab-api.onrender.com';
+const APPS_SCRIPT_URL = 'REPLACE_WITH_APPS_SCRIPT_URL';
+const IS_LOCAL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
 async function postToServer(endpoint, data) {
+  const type = endpoint.replace('/api/book-', '').replace('/api/', '');
+  const payload = { ...data, endpoint: type };
+
+  if (IS_LOCAL) {
+    try {
+      await fetch('http://localhost:3000' + endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+    } catch (_) {}
+    return;
+  }
+
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'REPLACE_WITH_APPS_SCRIPT_URL') return;
   try {
-    await fetch(MACCOLLAB_API + endpoint, {
+    await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload),
     });
-  } catch (_) { /* server not running — silent fail */ }
+  } catch (_) {}
 }
 
 /* ── Gallery photo switcher ── */
