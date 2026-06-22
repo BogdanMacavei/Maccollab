@@ -648,7 +648,7 @@ function closeSuccessPopup() {
   if (popup) { popup.classList.remove('open'); document.body.style.overflow = ''; }
 }
 
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx7MRlpfcf4sPXYe0XarxayKsbUCjT23Ytd174eOEoqaMtw7OFoSPAGv4OP-7d3dHE_/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxbkp4-D2LFR2e8d9sGgA7HJQZA89xFALagbMX7Gd2u1un270tUESZBEc20LDzpjw/exec';
 const IS_LOCAL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
 async function postToServer(endpoint, data) {
@@ -670,12 +670,8 @@ async function postToServer(endpoint, data) {
 
   if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'REPLACE_WITH_APPS_SCRIPT_URL') return;
   try {
-    await fetch(APPS_SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify(payload),
-    });
+    const url = APPS_SCRIPT_URL + '?data=' + encodeURIComponent(JSON.stringify(payload));
+    await fetch(url, { method: 'GET', mode: 'no-cors' });
   } catch (err) { console.warn('[Maccollab] Apps Script error:', err.message); }
 }
 

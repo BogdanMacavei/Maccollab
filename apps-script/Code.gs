@@ -1,15 +1,12 @@
 var CALENDAR_ID = 'maccollab25@gmail.com';
 
-function doPost(e) {
+function doGet(e) {
   try {
-    var raw  = e.postData ? e.postData.contents : '{}';
-    var data = JSON.parse(raw);
+    var data = JSON.parse(decodeURIComponent(e.parameter.data || '{}'));
     var endpoint = data.endpoint;
     var calendar = CalendarApp.getCalendarById(CALENDAR_ID);
 
-    if (!calendar) {
-      return ok(false, 'Calendar not found');
-    }
+    if (!calendar) return ok(false, 'Calendar not found');
 
     if (endpoint === 'tour') {
       var tDate = new Date(data.date + 'T' + (data.time || '10:00') + ':00');
@@ -18,11 +15,11 @@ function doPost(e) {
         '🏢 Tour Booking – ' + data.name,
         tDate, tEnd,
         { description:
-            'Name: '        + data.name             + '\n' +
-            'Email: '       + data.email            + '\n' +
-            'Phone: '       + (data.phone || '—') + '\n' +
-            'Interested in: '+ (data.officeType||'—')+ '\n'+
-            'Notes: '       + (data.notes || '—')
+            'Name: '         + data.name              + '\n' +
+            'Email: '        + data.email             + '\n' +
+            'Phone: '        + (data.phone     || '—') + '\n' +
+            'Interested in: '+ (data.officeType|| '—') + '\n' +
+            'Notes: '        + (data.notes     || '—')
         }
       );
 
@@ -34,27 +31,27 @@ function doPost(e) {
         '🪑 Desk Booking – ' + data.name + ' (' + (data.deskCount || 1) + ' desk)',
         dStart, dEnd,
         { description:
-            'Name: '  + data.name               + '\n' +
-            'Email: ' + data.email              + '\n' +
-            'Phone: ' + (data.phone || '—')  + '\n' +
-            'Notes: ' + (data.message || '—')
+            'Name: '  + data.name                + '\n' +
+            'Email: ' + data.email               + '\n' +
+            'Phone: ' + (data.phone    || '—') + '\n' +
+            'Notes: ' + (data.message  || '—')
         }
       );
 
     } else if (endpoint === 'conference') {
-      var cDate   = new Date(data.confDate + 'T' + (data.confTime || '09:00') + ':00');
-      var hours   = data.duration === 'Full day' ? 8 : (parseInt(data.duration) || 1);
-      var cEnd    = new Date(cDate.getTime() + hours * 60 * 60 * 1000);
+      var cDate  = new Date(data.confDate + 'T' + (data.confTime || '09:00') + ':00');
+      var hours  = data.duration === 'Full day' ? 8 : (parseInt(data.duration) || 1);
+      var cEnd   = new Date(cDate.getTime() + hours * 60 * 60 * 1000);
       calendar.createEvent(
-        '🎤 Conference Room – ' + data.name,
+        '🎙 Conference Room – ' + data.name,
         cDate, cEnd,
         { description:
-            'Name: '         + data.name                  + '\n' +
-            'Email: '        + data.email                 + '\n' +
-            'Phone: '        + (data.phone || '—')     + '\n' +
-            'Participants: ' + (data.participants || '—') + '\n'+
-            'Duration: '     + (data.duration || '—') + '\n' +
-            'Notes: '        + (data.notes || '—')
+            'Name: '         + data.name                   + '\n' +
+            'Email: '        + data.email                  + '\n' +
+            'Phone: '        + (data.phone        || '—') + '\n' +
+            'Participants: ' + (data.participants  || '—') + '\n' +
+            'Duration: '     + (data.duration      || '—') + '\n' +
+            'Notes: '        + (data.notes         || '—')
         }
       );
     }
