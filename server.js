@@ -100,7 +100,7 @@ app.use(express.static(path.join(__dirname)));   // serve HTML/CSS/JS/images
 // Rate limiting for API endpoints
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,  // 15 minutes
-  max: 10,
+  max: 100,
   standardHeaders: true,
   legacyHeaders: false,
   message: { ok: false, message: 'Too many requests. Please try again later.' },

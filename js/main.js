@@ -159,7 +159,9 @@ emailjs.init('pCeuUl7FpFgAbdqZO');
 (function () {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-      const target = document.querySelector(this.getAttribute('href'));
+      const href = this.getAttribute('href');
+      if (!href || href === '#') return;
+      const target = document.querySelector(href);
       if (!target) return;
       e.preventDefault();
       const offset = document.getElementById('navbar').offsetHeight + 8;
@@ -409,12 +411,13 @@ document.querySelectorAll('img').forEach(img => {
       notes: this.querySelector('[name="notes"]').value.trim(),
     };
     if (!body.name || !body.email || !body.phone || !body.date || !body.time) {
-      return showMsg(msgEl, 'Completează toate câmpurile obligatorii.', 'error');
+      return showMsg(msgEl, 'Please fill in all required fields.', 'error');
     }
     const subject = `New Desk Booking from ${body.name} – Maccollab`;
     const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Date:</strong> ${body.date}<br><strong>Time:</strong> ${body.time}<br><strong>Notes:</strong> ${body.notes || '—'}`;
-    const ok = await submitForm(subject, message, body.email, this, msgEl, 'Desk rezervat! Te confirmăm pe email.');
-    if (ok) { closeModal(); postToServer('/api/book-desk', { ...body, startDate: body.date, endDate: body.date, deskCount: '1' }); }
+    postToServer('/api/book-desk', { ...body, startDate: body.date, endDate: body.date, deskCount: '1' });
+    const ok = await submitForm(subject, message, body.email, this, msgEl, 'Desk booked! We will confirm your reservation by email.');
+    if (ok) { closeModal(); }
   });
 })();
 
@@ -511,12 +514,13 @@ document.querySelectorAll('img').forEach(img => {
       notes:        this.querySelector('[name="notes"]').value.trim(),
     };
     if (!body.name || !body.email || !body.phone || !body.participants || !body.confDate || !body.confTime || !body.duration) {
-      return showMsg(msgEl, 'Completează toate câmpurile obligatorii.', 'error');
+      return showMsg(msgEl, 'Please fill in all required fields.', 'error');
     }
     const subject = `Conference Room Booking from ${body.name} – Maccollab`;
     const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Participants:</strong> ${body.participants}<br><strong>Date:</strong> ${body.confDate}<br><strong>Time:</strong> ${body.confTime}<br><strong>Duration:</strong> ${body.duration}<br><strong>Notes:</strong> ${body.notes || '—'}`;
-    const ok = await submitForm(subject, message, body.email, this, msgEl, 'Rezervare primită! Te confirmăm pe email.');
-    if (ok) { closeModal(); postToServer('/api/book-conference', body); }
+    postToServer('/api/book-conference', body);
+    const ok = await submitForm(subject, message, body.email, this, msgEl, 'Booking confirmed! We will get back to you by email.');
+    if (ok) { closeModal(); }
   });
 })();
 
@@ -645,13 +649,17 @@ function closeSuccessPopup() {
 }
 
 async function postToServer(endpoint, data) {
+  const url = 'http://localhost:3000' + endpoint;
+  console.log('[Maccollab] postToServer →', url, data);
   try {
-    await fetch(endpoint, {
+    const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
-  } catch (_) { /* server not running — silent fail */ }
+    const json = await res.json();
+    console.log('[Maccollab] server response:', json);
+  } catch (err) { console.warn('[Maccollab] server not reachable:', err.message); }
 }
 
 async function submitForm(subject, messageHtml, replyEmail, form, msgEl, successText) {

@@ -1,0 +1,16 @@
+# Sensitive credentials — never commit these
+.env
+google-credentials.json
+google-credentials.json.json
+*.json.json
+
+# Server data (contains personal info from bookings)
+data/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db

@@ -376,11 +376,11 @@ document.getElementById('navbar').classList.add('scrolled');
     const deskStart = this.querySelector('[name="startDate"]').value;
     const deskEnd   = this.querySelector('[name="endDate"]').value;
     const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Desks:</strong> ${this.querySelector('[name="deskCount"]').value}<br><strong>Start Date:</strong> ${deskStart}<br><strong>End Date:</strong> ${deskEnd}<br><strong>Notes:</strong> ${this.querySelector('[name="message"]').value.trim() || '—'}`;
+    const deskData = { name: body.name, email: body.email, phone: body.phone, deskCount: this.querySelector('[name="deskCount"]').value, startDate: deskStart, endDate: deskEnd, message: this.querySelector('[name="message"]').value.trim() };
+    postToServer('/api/book-desk', deskData);
     try {
       await emailjs.send('service_160291d', 'template_dkgb3vs', { subject, message, email: body.email });
-      const deskData = { name: body.name, email: body.email, phone: body.phone, deskCount: this.querySelector('[name="deskCount"]').value, startDate: this.querySelector('[name="startDate"]').value, endDate: this.querySelector('[name="endDate"]').value, message: this.querySelector('[name="message"]').value.trim() };
       this.reset(); closeDeskModal();
-      postToServer('/api/book-desk', deskData);
       showSuccessPopup('Desk booked! We will confirm your reservation by email.');
     } catch (err) { console.error(err); msgEl.textContent = 'Something went wrong. Please try again.'; msgEl.className = 'form-msg error'; }
     finally { btn.disabled = false; btn.textContent = 'Book Desk'; }
@@ -486,12 +486,16 @@ document.getElementById('navbar').classList.add('scrolled');
     const btn = this.querySelector('[type="submit"]');
     btn.disabled = true; btn.textContent = 'Sending…';
     const subject = `Conference Room Booking from ${body.name} – Maccollab`;
-    const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Date:</strong> ${this.querySelector('[name="confDate"]').value}<br><strong>Start Time:</strong> ${this.querySelector('[name="confTime"]').value}<br><strong>Duration:</strong> ${this.querySelector('[name="duration"]').value}<br><strong>Notes:</strong> ${this.querySelector('[name="notes"]').value.trim() || '—'}`;
+    const confDate = this.querySelector('[name="confDate"]').value;
+    const confTime = this.querySelector('[name="confTime"]').value;
+    const duration = this.querySelector('[name="duration"]').value;
+    const notes    = this.querySelector('[name="notes"]').value.trim();
+    const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Date:</strong> ${confDate}<br><strong>Start Time:</strong> ${confTime}<br><strong>Duration:</strong> ${duration}<br><strong>Notes:</strong> ${notes || '—'}`;
+    const confData = { name: body.name, email: body.email, phone: body.phone, confDate, confTime, duration, notes };
+    postToServer('/api/book-conference', confData);
     try {
       await emailjs.send('service_160291d', 'template_dkgb3vs', { subject, message, email: body.email });
-      const confData = { name: body.name, email: body.email, phone: body.phone, confDate: this.querySelector('[name="confDate"]').value, confTime: this.querySelector('[name="confTime"]').value, duration: this.querySelector('[name="duration"]').value, notes: this.querySelector('[name="notes"]').value.trim() };
       this.reset(); closeConfModal();
-      postToServer('/api/book-conference', confData);
       showSuccessPopup('Booking received! We will confirm by email.');
     } catch (err) { console.error(err); msgEl.textContent = 'Something went wrong. Please try again.'; msgEl.className = 'form-msg error'; }
     finally { btn.disabled = false; btn.textContent = 'Book Conference Room'; }
