@@ -287,6 +287,7 @@ p { color: var(--text-muted); font-size: 0.975rem; line-height: 1.7; }
   position: relative;
   height: 100vh;
   min-height: 600px;
+  padding-top: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -557,6 +558,69 @@ a.office-card {
 }
 
 a.office-card:hover .office-link { text-decoration: underline; }
+
+.office-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px 18px;
+  gap: 10px;
+}
+
+.btn-sm {
+  font-size: 0.78rem;
+  padding: 7px 14px;
+  border-radius: 6px;
+}
+
+/* ── BOOK CHOOSE MODAL ── */
+.book-choose-box {
+  max-width: 520px;
+}
+
+.book-choose-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.book-choose-card {
+  background: var(--off-white, #f8f5f5);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 20px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.2s, background 0.2s;
+}
+
+.book-choose-card:hover {
+  border-color: var(--burgundy);
+  background: #fff;
+  transform: translateY(-3px);
+}
+
+.book-choose-icon {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+.book-choose-label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.book-choose-sub {
+  font-size: 0.72rem;
+  color: var(--text-muted, #888);
+}
+
+@media (max-width: 480px) {
+  .book-choose-options { grid-template-columns: 1fr; }
+}
 
 /* ══════════════════════════════════════════════════════
    FACILITIES
@@ -1096,6 +1160,86 @@ a.office-card:hover .office-link { text-decoration: underline; }
 }
 .success-popup-btn {
   min-width: 130px;
+}
+
+/* ══════════════════════════════════════════════════════
+   ATENA SPORT BANNER
+   ══════════════════════════════════════════════════════ */
+.atena-banner {
+  position: fixed;
+  top: 72px;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: rgba(26, 20, 100, 0.55);
+  backdrop-filter: blur(6px);
+  padding: 8px 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.atena-banner.hidden {
+  opacity: 0;
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+.atena-banner-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.atena-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.atena-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.atena-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #f5c400;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.atena-schedule {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.atena-schedule span {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+.atena-address {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: rgba(255,255,255,0.75) !important;
+  font-weight: 500 !important;
+}
+
+@media (max-width: 600px) {
+  .atena-banner-inner { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .atena-schedule { gap: 12px; }
 }
 
 /* ══════════════════════════════════════════════════════

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="images/image (3).svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Before & After School Sportiv – Atena Sport Brașov</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #12106e;
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    /* ── BACK BAR ── */
+    .back-bar {
+      background: rgba(255,255,255,0.08);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+    }
+    .back-bar a {
+      color: #00d4e8;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: 0.02em;
+    }
+    .back-bar a:hover { color: #fff; }
+
+    /* ── PAGE WRAPPER ── */
+    .as-page {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ── HEADER ── */
+    .as-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .as-logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .as-org {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .as-title {
+      font-family: 'League Spartan', sans-serif;
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      font-weight: 900;
+      color: #f5c400;
+      text-transform: uppercase;
+      line-height: 1.1;
+      letter-spacing: 0.02em;
+      margin-bottom: 8px;
+    }
+
+    .as-motto {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ff6eb4;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+
+    /* ── SCHEDULE CARD ── */
+    .as-schedule {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(0,212,232,0.3);
+      border-radius: 16px;
+      padding: 24px 32px;
+      margin-bottom: 36px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .as-schedule-item {
+      text-align: center;
+    }
+
+    .as-schedule-days {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 4px;
+    }
+
+    .as-schedule-hours {
+      font-family: 'League Spartan', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #00d4e8;
+    }
+
+    /* ── TARIFE ── */
+    .as-section-title {
+      font-family: 'League Spartan', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #f5c400;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .as-plans {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .as-plan {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 24px 20px;
+      text-align: center;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .as-plan:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0,212,232,0.5);
+    }
+
+    .as-plan-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 8px;
+    }
+
+    .as-plan-price {
+      font-family: 'League Spartan', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: #f5c400;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .as-plan-price span {
+      font-size: 1rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .as-plan-note {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+      margin-top: 6px;
+    }
+
+    /* ── ACTIVITATI ── */
+    .as-activities {
+      background: rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 36px;
+    }
+
+    .as-activities ul {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px 24px;
+      margin-top: 16px;
+    }
+
+    .as-activities li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.88);
+    }
+
+    .as-activities li::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #00d4e8;
+      flex-shrink: 0;
+    }
+
+    /* ── CONTACT ── */
+    .as-contact {
+      text-align: center;
+      background: rgba(245,196,0,0.1);
+      border: 1px solid rgba(245,196,0,0.3);
+      border-radius: 16px;
+      padding: 28px 24px;
+    }
+
+    .as-address {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #f5c400;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .as-phones {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .as-phones a {
+      font-family: 'League Spartan', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+
+    .as-phones a:hover { color: #00d4e8; }
+
+    @media (max-width: 560px) {
+      .as-schedule { gap: 24px; }
+      .as-activities { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="back-bar">
+    <a href="index.html">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Înapoi la maccollab
+    </a>
+  </div>
+
+  <div class="as-page">
+
+    <!-- HEADER -->
+    <div class="as-header">
+      <p class="as-org">Atena Sport Brașov</p>
+      <h1 class="as-title">Before &amp; After<br>School Sportiv</h1>
+      <p class="as-motto">Armonie &nbsp;·&nbsp; Disciplină &nbsp;·&nbsp; Creativitate</p>
+    </div>
+
+    <!-- PROGRAM -->
+    <div class="as-schedule">
+      <div class="as-schedule-item">
+        <div class="as-schedule-days">Luni – Vineri</div>
+        <div class="as-schedule-hours">8:30 – 19:00</div>
+      </div>
+      <div class="as-schedule-item">
+        <div class="as-schedule-days">Sâmbătă – Duminică</div>
+        <div class="as-schedule-hours">10:00 – 15:00</div>
+      </div>
+    </div>
+
+    <!-- TARIFE -->
+    <p class="as-section-title">Tarife</p>
+    <div class="as-plans">
+      <div class="as-plan">
+        <div class="as-plan-label">5 zile / săptămână</div>
+        <div class="as-plan-price">1300 <span>lei/lună</span></div>
+        <div class="as-plan-note">+ 45 lei (2 mese)</div>
+      </div>
+      <div class="as-plan">
+        <div class="as-plan-label">7 zile / săptămână</div>
+        <div class="as-plan-price">1600 <span>lei/lună</span></div>
+        <div class="as-plan-note">Program complet</div>
+      </div>
+      <div class="as-plan">
+        <div class="as-plan-label">O zi</div>
+        <div class="as-plan-price">200 <span>lei/zi</span></div>
+        <div class="as-plan-note">Mâncare inclusă</div>
+      </div>
+    </div>
+
+    <!-- ACTIVITATI -->
+    <div class="as-activities">
+      <p class="as-section-title" style="margin-bottom:0">Ce includem</p>
+      <ul>
+        <li>2 gustări pe zi</li>
+        <li>2 limbi străine / săptămână</li>
+        <li>2 sporturi / săptămână</li>
+        <li>Lecții didactice în fiecare zi</li>
+        <li>Transport de acasă la locație</li>
+      </ul>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="as-contact">
+      <div class="as-address">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Horia 22A, Brașov
+      </div>
+      <div class="as-phones">
+        <a href="tel:0770936112">0770 936 112</a>
+        <a href="tel:0749107306">0749 107 306</a>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

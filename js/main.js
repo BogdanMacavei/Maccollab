@@ -4,6 +4,87 @@
 
 emailjs.init('pCeuUl7FpFgAbdqZO');
 
+/* ─── BOOKING CHOICE MODAL ──────────────────────────── */
+(function () {
+  const modal = document.createElement('div');
+  modal.id = 'bookChooseModal';
+  modal.className = 'modal-overlay';
+  modal.setAttribute('aria-modal', 'true');
+  modal.innerHTML = `
+    <div class="modal-box book-choose-box">
+      <button class="modal-close" id="bookChooseClose" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <p class="section-label">Rezervare</p>
+      <h2>Ce dorești să rezervi?</h2>
+      <div class="book-choose-options">
+        <button class="book-choose-card" data-choose="tour">
+          <div class="book-choose-icon">🏢</div>
+          <div class="book-choose-label">Book a Tour</div>
+          <div class="book-choose-sub">Vizitează spațiile noastre</div>
+        </button>
+        <button class="book-choose-card" data-choose="desk">
+          <div class="book-choose-icon">🪑</div>
+          <div class="book-choose-label">Book a Desk</div>
+          <div class="book-choose-sub">Rezervă un birou dedicat</div>
+        </button>
+        <button class="book-choose-card" data-choose="conference">
+          <div class="book-choose-icon">🎤</div>
+          <div class="book-choose-label">Conference Room</div>
+          <div class="book-choose-sub">Rezervă sala de conferințe</div>
+        </button>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+
+  function openChoose()  { modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeChoose() { modal.classList.remove('open'); document.body.style.overflow = ''; }
+
+  document.getElementById('bookChooseClose').addEventListener('click', closeChoose);
+  modal.addEventListener('click', e => { if (e.target === modal) closeChoose(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeChoose(); });
+
+  document.querySelectorAll('[data-action="book-choose"]').forEach(btn => {
+    btn.addEventListener('click', e => { e.preventDefault(); openChoose(); });
+  });
+
+  modal.querySelectorAll('.book-choose-card').forEach(card => {
+    card.addEventListener('click', function () {
+      closeChoose();
+      const choice = this.getAttribute('data-choose');
+      setTimeout(() => {
+        if (choice === 'tour') {
+          const tourBtn = document.querySelector('[data-action="book-tour"]');
+          if (tourBtn) tourBtn.click();
+        } else if (choice === 'desk') {
+          const deskBtn = document.querySelector('[data-action="book-desk"]');
+          if (deskBtn) deskBtn.click();
+          else if (window._openDeskModalMain) window._openDeskModalMain();
+        } else if (choice === 'conference') {
+          const confBtn = document.querySelector('[data-action="book-conference"]');
+          if (confBtn) confBtn.click();
+          else if (window._openConfModalMain) window._openConfModalMain();
+        }
+      }, 300);
+    });
+  });
+})();
+
+/* ─── ATENA BANNER: hide on scroll ─────────────────── */
+(function () {
+  const banner = document.querySelector('.atena-banner');
+  if (!banner) return;
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 80) {
+      banner.classList.add('hidden');
+    } else {
+      banner.classList.remove('hidden');
+    }
+  }, { passive: true });
+})();
+
 /* ─── NAVBAR: scroll state & hamburger ─────────────── */
 (function () {
   const navbar    = document.getElementById('navbar');
@@ -242,6 +323,200 @@ document.querySelectorAll('img').forEach(img => {
       closeModal();
       postToServer('/api/book-tour', body);
     }
+  });
+})();
+
+/* ══════════════════════════════════════════════════════
+   BOOK A DESK MODAL (main page)
+   ══════════════════════════════════════════════════════ */
+(function () {
+  const modal = document.createElement('div');
+  modal.id = 'deskModalMain';
+  modal.className = 'modal-overlay';
+  modal.setAttribute('aria-modal', 'true');
+  modal.setAttribute('role', 'dialog');
+  modal.innerHTML = `
+    <div class="modal-box">
+      <button class="modal-close" id="deskModalMainClose" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <p class="section-label">Private Desk</p>
+      <h2>Book a Desk</h2>
+      <p class="modal-sub">Reserve your dedicated desk in our coworking space.</p>
+      <form id="deskFormMain" novalidate>
+        <div class="form-row">
+          <div class="form-group"><input type="text"  name="name"  placeholder="Your Name *" required /></div>
+          <div class="form-group"><input type="email" name="email" placeholder="Email Address *" required /></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><input type="tel" name="phone" placeholder="Phone Number *" required /></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="date-label">Date *</label>
+            <input type="date" name="date" required id="deskMainDate" />
+          </div>
+          <div class="form-group">
+            <label class="date-label">Preferred Time *</label>
+            <select name="time" required>
+              <option value="">Select time…</option>
+              <option value="08:00">08:00 AM</option>
+              <option value="09:00">09:00 AM</option>
+              <option value="10:00">10:00 AM</option>
+              <option value="11:00">11:00 AM</option>
+              <option value="12:00">12:00 PM</option>
+              <option value="13:00">01:00 PM</option>
+              <option value="14:00">02:00 PM</option>
+              <option value="15:00">03:00 PM</option>
+              <option value="16:00">04:00 PM</option>
+              <option value="17:00">05:00 PM</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <textarea name="notes" rows="3" placeholder="Details or questions…"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Book Desk</button>
+        <p class="form-msg" id="deskMainFormMsg"></p>
+      </form>
+    </div>`;
+  document.body.appendChild(modal);
+
+  function openModal()  { document.getElementById('deskMainDate').min = getTodayStr(); document.getElementById('deskMainDate').value = getTodayStr(); modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
+  window._openDeskModalMain = openModal;
+
+  document.getElementById('deskModalMainClose').addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  document.querySelectorAll('[data-action="book-desk"]').forEach(btn => {
+    btn.addEventListener('click', e => { e.preventDefault(); openModal(); });
+  });
+
+  document.getElementById('deskFormMain').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const msgEl = document.getElementById('deskMainFormMsg');
+    const body = {
+      name:  this.querySelector('[name="name"]').value.trim(),
+      email: this.querySelector('[name="email"]').value.trim(),
+      phone: this.querySelector('[name="phone"]').value.trim(),
+      date:  this.querySelector('[name="date"]').value,
+      time:  this.querySelector('[name="time"]').value,
+      notes: this.querySelector('[name="notes"]').value.trim(),
+    };
+    if (!body.name || !body.email || !body.phone || !body.date || !body.time) {
+      return showMsg(msgEl, 'Completează toate câmpurile obligatorii.', 'error');
+    }
+    const subject = `New Desk Booking from ${body.name} – Maccollab`;
+    const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Date:</strong> ${body.date}<br><strong>Time:</strong> ${body.time}<br><strong>Notes:</strong> ${body.notes || '—'}`;
+    const ok = await submitForm(subject, message, body.email, this, msgEl, 'Desk rezervat! Te confirmăm pe email.');
+    if (ok) { closeModal(); postToServer('/api/book-desk', { ...body, startDate: body.date, endDate: body.date, deskCount: '1' }); }
+  });
+})();
+
+/* ══════════════════════════════════════════════════════
+   BOOK CONFERENCE ROOM MODAL (main page)
+   ══════════════════════════════════════════════════════ */
+(function () {
+  const modal = document.createElement('div');
+  modal.id = 'confModalMain';
+  modal.className = 'modal-overlay';
+  modal.setAttribute('aria-modal', 'true');
+  modal.setAttribute('role', 'dialog');
+
+  const hours = Array.from({length: 13}, (_, i) => {
+    const h = String(i + 7).padStart(2, '0');
+    return `<option value="${h}:00">${h}:00</option>`;
+  }).join('');
+
+  modal.innerHTML = `
+    <div class="modal-box">
+      <button class="modal-close" id="confModalMainClose" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <p class="section-label">Conference Room</p>
+      <h2>Book Conference Room</h2>
+      <p class="modal-sub">Reserve the conference room for your meeting or event.</p>
+      <form id="confFormMain" novalidate>
+        <div class="form-row">
+          <div class="form-group"><input type="text"  name="name"  placeholder="Your Name *"     required /></div>
+          <div class="form-group"><input type="email" name="email" placeholder="Email Address *"  required /></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><input type="tel"    name="phone"        placeholder="Phone Number *"         required /></div>
+          <div class="form-group"><input type="number" name="participants"  placeholder="No. of Participants *" required min="1" /></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="date-label">Date *</label>
+            <input type="date" name="confDate" required id="confMainDate" />
+          </div>
+          <div class="form-group">
+            <label class="date-label">Start Time *</label>
+            <select name="confTime" required>
+              <option value="">Select time…</option>
+              ${hours}
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <select name="duration" required>
+            <option value="">Duration *</option>
+            <option value="1 hour">1 hour</option>
+            <option value="2 hours">2 hours</option>
+            <option value="3 hours">3 hours</option>
+            <option value="4 hours">4 hours</option>
+            <option value="Full day">Full day</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <textarea name="notes" rows="3" placeholder="Questions or special requirements…"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Book Conference Room</button>
+        <p class="form-msg" id="confMainFormMsg"></p>
+      </form>
+    </div>`;
+  document.body.appendChild(modal);
+
+  function openModal()  { document.getElementById('confMainDate').min = getTodayStr(); document.getElementById('confMainDate').value = getTodayStr(); modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
+  window._openConfModalMain = openModal;
+
+  document.getElementById('confModalMainClose').addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  document.querySelectorAll('[data-action="book-conference"]').forEach(btn => {
+    btn.addEventListener('click', e => { e.preventDefault(); openModal(); });
+  });
+
+  document.getElementById('confFormMain').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const msgEl = document.getElementById('confMainFormMsg');
+    const body = {
+      name:         this.querySelector('[name="name"]').value.trim(),
+      email:        this.querySelector('[name="email"]').value.trim(),
+      phone:        this.querySelector('[name="phone"]').value.trim(),
+      participants: this.querySelector('[name="participants"]').value,
+      confDate:     this.querySelector('[name="confDate"]').value,
+      confTime:     this.querySelector('[name="confTime"]').value,
+      duration:     this.querySelector('[name="duration"]').value,
+      notes:        this.querySelector('[name="notes"]').value.trim(),
+    };
+    if (!body.name || !body.email || !body.phone || !body.participants || !body.confDate || !body.confTime || !body.duration) {
+      return showMsg(msgEl, 'Completează toate câmpurile obligatorii.', 'error');
+    }
+    const subject = `Conference Room Booking from ${body.name} – Maccollab`;
+    const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Participants:</strong> ${body.participants}<br><strong>Date:</strong> ${body.confDate}<br><strong>Time:</strong> ${body.confTime}<br><strong>Duration:</strong> ${body.duration}<br><strong>Notes:</strong> ${body.notes || '—'}`;
+    const ok = await submitForm(subject, message, body.email, this, msgEl, 'Rezervare primită! Te confirmăm pe email.');
+    if (ok) { closeModal(); postToServer('/api/book-conference', body); }
   });
 })();
 
