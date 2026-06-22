@@ -1,5 +1,15 @@
 emailjs.init('pCeuUl7FpFgAbdqZO');
 
+async function postToServer(endpoint, data) {
+  try {
+    await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+  } catch (_) { /* server not running — silent fail */ }
+}
+
 /* ── Gallery photo switcher ── */
 const _thumbs = Array.from(document.querySelectorAll('.thumb'));
 let _galleryIdx = 0;
@@ -155,9 +165,10 @@ document.getElementById('navbar').classList.add('scrolled');
     const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone || '—'}<br><strong>Interested In:</strong> ${body.officeType || '—'}<br><strong>Date:</strong> ${body.date}<br><strong>Time:</strong> ${body.time}<br><strong>Notes:</strong> ${body.notes || '—'}`;
     try {
       await emailjs.send('service_160291d', 'template_dkgb3vs', { subject, message, email: body.email });
-      msgEl.textContent = 'Tour booked! We will confirm your visit by email.';
-      msgEl.className = 'form-msg success';
-      this.reset(); setTimeout(closeModal, 2500);
+      const tourData = { name: body.name, email: body.email, phone: body.phone, date: body.date, time: body.time, officeType: body.officeType, notes: body.notes };
+      this.reset(); closeModal();
+      postToServer('/api/book-tour', tourData);
+      showSuccessPopup('Tour booked! We will confirm your visit by email.');
     } catch (err) { console.error(err); msgEl.textContent = 'Something went wrong. Please try again.'; msgEl.className = 'form-msg error'; }
     finally { btn.disabled = false; btn.textContent = 'Confirm Booking'; }
   });
@@ -245,9 +256,8 @@ document.getElementById('navbar').classList.add('scrolled');
     const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Office Type:</strong> ${body.officeType || '—'}<br><strong>Notes:</strong> ${body.message || '—'}`;
     try {
       await emailjs.send('service_160291d', 'template_dkgb3vs', { subject, message, email: body.email });
-      msgEl.textContent = 'Thank you! We will prepare a custom offer for you.';
-      msgEl.className = 'form-msg success';
-      this.reset(); setTimeout(closeOfferModal, 2500);
+      this.reset(); closeOfferModal();
+      showSuccessPopup('Thank you! We will prepare a custom offer for you.');
     } catch (err) { console.error(err); msgEl.textContent = 'Something went wrong. Please try again.'; msgEl.className = 'form-msg error'; }
     finally { btn.disabled = false; btn.textContent = 'Send Offer Request'; }
   });
@@ -368,9 +378,10 @@ document.getElementById('navbar').classList.add('scrolled');
     const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Desks:</strong> ${this.querySelector('[name="deskCount"]').value}<br><strong>Start Date:</strong> ${deskStart}<br><strong>End Date:</strong> ${deskEnd}<br><strong>Notes:</strong> ${this.querySelector('[name="message"]').value.trim() || '—'}`;
     try {
       await emailjs.send('service_160291d', 'template_dkgb3vs', { subject, message, email: body.email });
-      msgEl.textContent = 'Desk booked! We will confirm your reservation by email.';
-      msgEl.className = 'form-msg success';
-      this.reset(); setTimeout(closeDeskModal, 2500);
+      const deskData = { name: body.name, email: body.email, phone: body.phone, deskCount: this.querySelector('[name="deskCount"]').value, startDate: this.querySelector('[name="startDate"]').value, endDate: this.querySelector('[name="endDate"]').value, message: this.querySelector('[name="message"]').value.trim() };
+      this.reset(); closeDeskModal();
+      postToServer('/api/book-desk', deskData);
+      showSuccessPopup('Desk booked! We will confirm your reservation by email.');
     } catch (err) { console.error(err); msgEl.textContent = 'Something went wrong. Please try again.'; msgEl.className = 'form-msg error'; }
     finally { btn.disabled = false; btn.textContent = 'Book Desk'; }
   });
@@ -478,9 +489,10 @@ document.getElementById('navbar').classList.add('scrolled');
     const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Date:</strong> ${this.querySelector('[name="confDate"]').value}<br><strong>Start Time:</strong> ${this.querySelector('[name="confTime"]').value}<br><strong>Duration:</strong> ${this.querySelector('[name="duration"]').value}<br><strong>Notes:</strong> ${this.querySelector('[name="notes"]').value.trim() || '—'}`;
     try {
       await emailjs.send('service_160291d', 'template_dkgb3vs', { subject, message, email: body.email });
-      msgEl.textContent = 'Booking received! We will confirm by email.';
-      msgEl.className = 'form-msg success';
-      this.reset(); setTimeout(closeConfModal, 2500);
+      const confData = { name: body.name, email: body.email, phone: body.phone, confDate: this.querySelector('[name="confDate"]').value, confTime: this.querySelector('[name="confTime"]').value, duration: this.querySelector('[name="duration"]').value, notes: this.querySelector('[name="notes"]').value.trim() };
+      this.reset(); closeConfModal();
+      postToServer('/api/book-conference', confData);
+      showSuccessPopup('Booking received! We will confirm by email.');
     } catch (err) { console.error(err); msgEl.textContent = 'Something went wrong. Please try again.'; msgEl.className = 'form-msg error'; }
     finally { btn.disabled = false; btn.textContent = 'Book Conference Room'; }
   });

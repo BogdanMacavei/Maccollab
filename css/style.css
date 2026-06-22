@@ -1043,6 +1043,62 @@ a.office-card:hover .office-link { text-decoration: underline; }
 }
 
 /* ══════════════════════════════════════════════════════
+   SUCCESS POPUP
+   ══════════════════════════════════════════════════════ */
+.success-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 10, 10, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.success-popup-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.success-popup-box {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 48px 40px 40px;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+  transform: translateY(24px) scale(0.97);
+  transition: transform 0.3s ease;
+}
+.success-popup-overlay.open .success-popup-box {
+  transform: none;
+}
+.success-popup-icon {
+  width: 76px;
+  height: 76px;
+  background: #edf7ed;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 22px;
+  color: #2d7a2d;
+}
+.success-popup-text {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  line-height: 1.55;
+  margin-bottom: 28px;
+}
+.success-popup-btn {
+  min-width: 130px;
+}
+
+/* ══════════════════════════════════════════════════════
    SCROLL ANIMATIONS
    ══════════════════════════════════════════════════════ */
 .reveal {

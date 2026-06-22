@@ -125,5 +125,27 @@
     "officeType": "Private Desk – 6 desks",
     "notes": "test",
     "createdAt": "2026-04-09T16:30:08.264Z"
+  },
+  {
+    "type": "tour",
+    "name": "Macavei Bogdan",
+    "email": "macaveibi@gmail.com",
+    "phone": "0731624826",
+    "date": "2026-06-30",
+    "time": "11:00",
+    "officeType": "Private Desk – 6 desks",
+    "notes": "Test 1 , Intregrare automata Google calendar",
+    "createdAt": "2026-06-22T10:53:43.250Z"
+  },
+  {
+    "type": "tour",
+    "name": "Macavei Bogdan",
+    "email": "macaveibi@gmail.com",
+    "phone": "0731624826",
+    "date": "2026-06-23",
+    "time": "11:00",
+    "officeType": "Private Desk – 6 desks",
+    "notes": "Test 2 , Integrare Google calendar automata",
+    "createdAt": "2026-06-22T10:59:48.707Z"
   }
 ]

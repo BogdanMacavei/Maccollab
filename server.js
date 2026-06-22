@@ -6,6 +6,7 @@ const path       = require('path');
 const fs         = require('fs');
 const nodemailer = require('nodemailer');
 const rateLimit  = require('express-rate-limit');
+const { google } = require('googleapis');
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
@@ -55,6 +56,40 @@ async function sendEmail(subject, html) {
     html,
   });
   console.log(`\n✉️   Email sent → ${process.env.EMAIL_TO} | ID: ${info.messageId}`);
+}
+
+/* ─── GOOGLE CALENDAR ────────────────────────────────── */
+function getCalendarClient() {
+  const credFile = path.join(__dirname, process.env.GOOGLE_CREDENTIALS_FILE || 'google-credentials.json');
+  if (!fs.existsSync(credFile)) return null;
+  const creds = JSON.parse(fs.readFileSync(credFile, 'utf8'));
+  const auth = new google.auth.GoogleAuth({
+    credentials: creds,
+    scopes: ['https://www.googleapis.com/auth/calendar'],
+  });
+  return google.calendar({ version: 'v3', auth });
+}
+
+async function addCalendarEvent({ summary, description, startDateTime, endDateTime, startDate, endDate }) {
+  const calendar = getCalendarClient();
+  if (!calendar) {
+    console.log('⚠️  Google credentials not found — skipping calendar event.');
+    return null;
+  }
+  const calendarId = process.env.GOOGLE_CALENDAR_ID || 'primary';
+  const event = { summary, description };
+
+  if (startDateTime) {
+    event.start = { dateTime: startDateTime, timeZone: 'Europe/Bucharest' };
+    event.end   = { dateTime: endDateTime,   timeZone: 'Europe/Bucharest' };
+  } else {
+    event.start = { date: startDate };
+    event.end   = { date: endDate };
+  }
+
+  const res = await calendar.events.insert({ calendarId, resource: event });
+  console.log(`📅  Calendar event created: ${res.data.htmlLink}`);
+  return res.data;
 }
 
 /* ─── MIDDLEWARE ─────────────────────────────────────── */
@@ -175,6 +210,18 @@ app.post('/api/book-tour', apiLimiter, async (req, res) => {
     console.error('Email error:', err.message);
   }
 
+  try {
+    const [hour, min] = (t || '10:00').split(':').map(Number);
+    const start = new Date(`${d}T${t || '10:00'}:00`);
+    const end   = new Date(start.getTime() + 60 * 60 * 1000);
+    await addCalendarEvent({
+      summary: `🏢 Tour – ${n}${ot ? ' (' + ot + ')' : ''}`,
+      description: `Client: ${n}\nEmail: ${e}\nPhone: ${p || '—'}\nInterested in: ${ot || '—'}\nNotes: ${no || '—'}`,
+      startDateTime: start.toISOString(),
+      endDateTime:   end.toISOString(),
+    });
+  } catch (err) { console.error('Calendar error:', err.message); }
+
   res.json({ ok: true, message: 'Tour booked! We will confirm your visit by email.' });
 });
 
@@ -223,6 +270,104 @@ app.post('/api/request-offer', apiLimiter, async (req, res) => {
   }
 
   res.json({ ok: true, message: 'Thank you! We will prepare a custom offer for you.' });
+});
+
+/* ─── POST /api/book-desk ────────────────────────────── */
+app.post('/api/book-desk', apiLimiter, async (req, res) => {
+  const { name, email, phone, deskCount, startDate, endDate, message } = req.body;
+  const n  = sanitize(name);
+  const e  = sanitize(email);
+  const p  = sanitize(phone);
+  const dc = sanitize(deskCount);
+  const sd = sanitize(startDate);
+  const ed = sanitize(endDate);
+  const m  = sanitize(message);
+
+  if (!n || !e || !sd || !ed) {
+    return res.status(400).json({ ok: false, message: 'Name, email, start and end date are required.' });
+  }
+  if (!isValidEmail(e)) {
+    return res.status(400).json({ ok: false, message: 'Invalid email address.' });
+  }
+
+  const entry = { type: 'desk', name: n, email: e, phone: p, deskCount: dc, startDate: sd, endDate: ed, message: m, createdAt: new Date().toISOString() };
+  saveSubmission(entry);
+  console.log(`\n🪑  Desk booking from: ${n} <${e}> ${sd} → ${ed}`);
+
+  try {
+    await sendEmail(
+      `New Desk Booking from ${n} – Maccollab`,
+      `<h2>New Desk Booking</h2>
+       <p><strong>Name:</strong> ${n}</p><p><strong>Email:</strong> ${e}</p>
+       <p><strong>Phone:</strong> ${p || '—'}</p><p><strong>Desks:</strong> ${dc}</p>
+       <p><strong>From:</strong> ${sd}</p><p><strong>To:</strong> ${ed}</p>
+       <p><strong>Notes:</strong> ${m || '—'}</p>
+       <hr/><small>Received: ${entry.createdAt}</small>`
+    );
+  } catch (err) { console.error('Email error:', err.message); }
+
+  try {
+    const endDatePlusOne = new Date(ed);
+    endDatePlusOne.setDate(endDatePlusOne.getDate() + 1);
+    await addCalendarEvent({
+      summary: `🪑 Desk Booking – ${n} (${dc} desk${dc > 1 ? 's' : ''})`,
+      description: `Client: ${n}\nEmail: ${e}\nPhone: ${p || '—'}\nDesks: ${dc}\nNotes: ${m || '—'}`,
+      startDate: sd,
+      endDate: endDatePlusOne.toISOString().split('T')[0],
+    });
+  } catch (err) { console.error('Calendar error:', err.message); }
+
+  res.json({ ok: true, message: 'Desk booked! We will confirm your reservation by email.' });
+});
+
+/* ─── POST /api/book-conference ──────────────────────── */
+app.post('/api/book-conference', apiLimiter, async (req, res) => {
+  const { name, email, phone, confDate, confTime, duration, notes } = req.body;
+  const n  = sanitize(name);
+  const e  = sanitize(email);
+  const p  = sanitize(phone);
+  const d  = sanitize(confDate);
+  const t  = sanitize(confTime);
+  const du = sanitize(duration);
+  const no = sanitize(notes);
+
+  if (!n || !e || !d || !t || !du) {
+    return res.status(400).json({ ok: false, message: 'All fields are required.' });
+  }
+  if (!isValidEmail(e)) {
+    return res.status(400).json({ ok: false, message: 'Invalid email address.' });
+  }
+
+  const entry = { type: 'conference', name: n, email: e, phone: p, date: d, time: t, duration: du, notes: no, createdAt: new Date().toISOString() };
+  saveSubmission(entry);
+  console.log(`\n🎤  Conference booking from: ${n} <${e}> on ${d} at ${t}`);
+
+  try {
+    await sendEmail(
+      `Conference Room Booking from ${n} – Maccollab`,
+      `<h2>Conference Room Booking</h2>
+       <p><strong>Name:</strong> ${n}</p><p><strong>Email:</strong> ${e}</p>
+       <p><strong>Phone:</strong> ${p || '—'}</p><p><strong>Date:</strong> ${d}</p>
+       <p><strong>Time:</strong> ${t}</p><p><strong>Duration:</strong> ${du}</p>
+       <p><strong>Notes:</strong> ${no || '—'}</p>
+       <hr/><small>Received: ${entry.createdAt}</small>`
+    );
+  } catch (err) { console.error('Email error:', err.message); }
+
+  try {
+    const durationHours = du === 'Full day' ? 8 : parseInt(du) || 1;
+    const [hour, min] = t.split(':').map(Number);
+    const start = new Date(`${d}T${t}:00`);
+    const end   = new Date(start.getTime() + durationHours * 60 * 60 * 1000);
+    await addCalendarEvent({
+      summary: `🎤 Conference Room – ${n}`,
+      description: `Client: ${n}\nEmail: ${e}\nPhone: ${p || '—'}\nDuration: ${du}\nNotes: ${no || '—'}`,
+      startDateTime: start.toISOString(),
+      endDateTime:   end.toISOString(),
+    });
+  } catch (err) { console.error('Calendar error:', err.message); }
+
+  res.json({ ok: true, message: 'Booking received! We will confirm by email.' });
 });
 
 /* ─── GET /api/submissions (simple admin read) ────────── */

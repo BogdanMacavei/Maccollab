@@ -238,7 +238,10 @@ document.querySelectorAll('img').forEach(img => {
     const ok = await submitForm(subject, message, body.email, tourForm, tourFormMsg,
       'Tour booked! We will confirm your visit by email.'
     );
-    if (ok) setTimeout(closeModal, 2800);
+    if (ok) {
+      closeModal();
+      postToServer('/api/book-tour', body);
+    }
   });
 })();
 
@@ -321,7 +324,7 @@ document.querySelectorAll('img').forEach(img => {
     const ok = await submitForm(subject, message, body.email, offerForm, offerFormMsg,
       'Thank you! We will prepare a custom offer for you.'
     );
-    if (ok) setTimeout(closeModal, 2800);
+    if (ok) closeModal();
   });
 })();
 
@@ -331,6 +334,49 @@ document.querySelectorAll('img').forEach(img => {
 function showMsg(el, text, type) {
   el.textContent = text;
   el.className   = 'form-msg ' + type;
+}
+
+function showSuccessPopup(text) {
+  let popup = document.getElementById('successPopup');
+  if (!popup) {
+    popup = document.createElement('div');
+    popup.id = 'successPopup';
+    popup.className = 'success-popup-overlay';
+    popup.innerHTML = `
+      <div class="success-popup-box">
+        <div class="success-popup-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+        </div>
+        <p class="success-popup-text"></p>
+        <button class="btn btn-primary success-popup-btn">OK</button>
+      </div>`;
+    document.body.appendChild(popup);
+    popup.querySelector('.success-popup-btn').addEventListener('click', closeSuccessPopup);
+    popup.addEventListener('click', e => { if (e.target === popup) closeSuccessPopup(); });
+  }
+  popup.querySelector('.success-popup-text').textContent = text;
+  popup.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  clearTimeout(popup._timer);
+  popup._timer = setTimeout(closeSuccessPopup, 4000);
+}
+
+function closeSuccessPopup() {
+  const popup = document.getElementById('successPopup');
+  if (popup) { popup.classList.remove('open'); document.body.style.overflow = ''; }
+}
+
+async function postToServer(endpoint, data) {
+  try {
+    await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+  } catch (_) { /* server not running — silent fail */ }
 }
 
 async function submitForm(subject, messageHtml, replyEmail, form, msgEl, successText) {
@@ -345,7 +391,7 @@ async function submitForm(subject, messageHtml, replyEmail, form, msgEl, success
       message: messageHtml,
       email:   replyEmail,
     });
-    showMsg(msgEl, successText, 'success');
+    showSuccessPopup(successText);
     form.reset();
     return true;
   } catch (err) {
