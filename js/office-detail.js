@@ -1,6 +1,6 @@
 emailjs.init('pCeuUl7FpFgAbdqZO');
 
-const APPS_SCRIPT_URL = 'REPLACE_WITH_APPS_SCRIPT_URL';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx7MRlpfcf4sPXYe0XarxayKsbUCjT23Ytd174eOEoqaMtw7OFoSPAGv4OP-7d3dHE_/exec';
 const IS_LOCAL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
 async function postToServer(endpoint, data) {
