@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="images/image (3).svg" />
+  <link rel="shortcut icon" type="image/svg+xml" href="images/image (3).svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Courses – maccollab Brașov</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ── PAGE ── */
+    .cursuri-hero {
+      background: var(--burgundy);
+      color: #fff;
+      text-align: center;
+      padding: 96px 24px 64px;
+    }
+    .cursuri-hero .section-label {
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 12px;
+    }
+    .cursuri-hero h1 {
+      font-family: var(--ff-serif);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      color: var(--cream);
+    }
+    .cursuri-hero p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.8);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* ── COURSES GRID ── */
+    .cursuri-section {
+      padding: 72px 24px 80px;
+      background: var(--cream);
+    }
+    .cursuri-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ── COURSE CARD ── */
+    .course-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .course-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(100,0,23,0.14);
+    }
+    .course-card-header {
+      background: var(--burgundy);
+      color: #fff;
+      padding: 28px 28px 24px;
+    }
+    .course-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .course-icon svg { width: 28px; height: 28px; }
+    .course-card-header h2 {
+      font-family: var(--ff-serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--cream);
+    }
+    .course-card-header .course-date {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.75);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .course-card-body {
+      padding: 24px 28px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .course-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+    .course-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .meta-tag {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .meta-tag svg { width: 14px; height: 14px; color: var(--burgundy); }
+
+    .spots-bar {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .spots-bar span { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+    .spots-bar strong { color: var(--burgundy); font-size: 1rem; }
+
+    .btn-inscrie {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: var(--burgundy);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: var(--ff-serif);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.2s ease;
+      margin-top: auto;
+    }
+    .btn-inscrie:hover { background: var(--burgundy-d); }
+
+    /* ── PRICE ── */
+    .price-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: #fff8f0;
+      border: 1.5px solid #f5d9b0;
+      border-radius: 10px;
+    }
+    .price-current {
+      font-family: var(--ff-serif);
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--burgundy);
+    }
+    .price-original {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-decoration: line-through;
+    }
+    .price-badge {
+      margin-left: auto;
+      background: var(--burgundy);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    /* ── REGISTRATION FORM ── */
+    .reg-form {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      padding: 20px 28px 28px;
+      border-top: 1px solid var(--border);
+      background: #fdfbf8;
+    }
+    .reg-form.open { display: flex; }
+    .reg-form h3 {
+      font-family: var(--ff-serif);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--burgundy);
+      margin-bottom: 4px;
+    }
+    .reg-form input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: var(--ff-sans);
+      font-size: 0.92rem;
+      color: var(--text);
+      background: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .reg-form input:focus { border-color: var(--burgundy); }
+    .reg-form input::placeholder { color: #bbb; }
+    .btn-submit-reg {
+      padding: 13px;
+      background: var(--burgundy);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-family: var(--ff-serif);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-submit-reg:hover { background: var(--burgundy-d); }
+    .btn-submit-reg:disabled { opacity: 0.6; cursor: not-allowed; }
+    .reg-msg {
+      font-size: 0.88rem;
+      text-align: center;
+      padding: 8px 0;
+      border-radius: 6px;
+      display: none;
+    }
+    .reg-msg.success { display: block; color: #1a7a3c; background: #e6f7ed; padding: 10px; }
+    .reg-msg.error   { display: block; color: #a01b1b; background: #fdeaea; padding: 10px; }
+
+    /* ── INFO STRIP ── */
+    .info-strip {
+      background: #fff;
+      border-top: 1px solid var(--border);
+      padding: 48px 24px;
+    }
+    .info-strip-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .info-strip h3 {
+      font-family: var(--ff-serif);
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .info-strip p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .info-strip a {
+      color: var(--burgundy);
+      font-weight: 600;
+    }
+
+    @media (max-width: 480px) {
+      .cursuri-hero { padding: 80px 20px 48px; }
+      .course-card-header, .course-card-body, .reg-form { padding-left: 20px; padding-right: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar scrolled" id="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo logo-with-mark">
+        <img src="images/image (3).svg" class="logo-mark" alt="maccollab" />
+        maccollab
+      </a>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html#about">About</a>
+        <a href="index.html#offices">Offices</a>
+        <a href="index.html#facilities">Facilities</a>
+        <a href="index.html#why">Our Mission</a>
+        <a href="cursuri.html" class="active">Courses</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+      <a href="index.html#contact" class="btn btn-primary nav-cta" data-action="book-tour">Book a Tour</a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="cursuri-hero">
+    <p class="section-label">maccollab · Brașov</p>
+    <h1>Weekend Courses</h1>
+    <p>Invest in yourself — financial education and IT, once a week, every Saturday, in the heart of Brașov.</p>
+  </section>
+
+  <!-- COURSES -->
+  <section class="cursuri-section">
+    <div class="cursuri-grid">
+
+      <!-- CARD 1: Educație Financiară -->
+      <div class="course-card">
+        <div class="course-card-header">
+          <div class="course-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </div>
+          <h2>Financial Education</h2>
+          <p class="course-date">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span id="fin-date-text">Every other Saturday</span>
+          </p>
+        </div>
+        <div class="course-card-body">
+          <p class="course-desc">
+            Learn to manage your money, understand investments, personal budgeting, and the core principles of financial freedom. Designed for everyone — regardless of experience level.
+          </p>
+          <div class="course-meta">
+            <span class="meta-tag">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Saturday · 10:00–11:00
+            </span>
+            <span class="meta-tag">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              Max 12 spots
+            </span>
+            <span class="meta-tag">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              maccollab, Brașov
+            </span>
+          </div>
+          <div class="price-row">
+            <span class="price-current">50 lei</span>
+            <span class="price-original">100 lei / person</span>
+            <span class="price-badge">August offer</span>
+          </div>
+          <div class="spots-bar">
+            <span>Available spots</span>
+            <strong id="fin-spots">12 / 12</strong>
+          </div>
+          <button class="btn-inscrie" onclick="toggleForm('fin')">Register Now</button>
+        </div>
+        <div class="reg-form" id="form-fin">
+          <h3>Register — Financial Education</h3>
+          <input type="text" id="fin-name" placeholder="Full name *" required />
+          <input type="email" id="fin-email" placeholder="Email *" required />
+          <input type="tel" id="fin-phone" placeholder="Phone (optional)" />
+          <button class="btn-submit-reg" onclick="submitReg('fin', 'Financial Education')">Submit Registration</button>
+          <p class="reg-msg" id="fin-msg"></p>
+        </div>
+      </div>
+
+      <!-- CARD 2: Curs IT -->
+      <div class="course-card">
+        <div class="course-card-header">
+          <div class="course-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+          <h2>IT Course</h2>
+          <p class="course-date">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span id="it-date-text">Every other Saturday</span>
+          </p>
+        </div>
+        <div class="course-card-body">
+          <p class="course-desc">
+            From the basics to practical skills: computer use, internet, digital productivity tools, and an introduction to programming. Perfect for beginners and anyone looking to level up their digital skills.
+          </p>
+          <div class="course-meta">
+            <span class="meta-tag">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Saturday · 10:00–11:00
+            </span>
+            <span class="meta-tag">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              Max 12 spots
+            </span>
+            <span class="meta-tag">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              maccollab, Brașov
+            </span>
+          </div>
+          <div class="price-row">
+            <span class="price-current">50 lei</span>
+            <span class="price-original">100 lei / person</span>
+            <span class="price-badge">August offer</span>
+          </div>
+          <div class="spots-bar">
+            <span>Available spots</span>
+            <strong id="it-spots">12 / 12</strong>
+          </div>
+          <button class="btn-inscrie" onclick="toggleForm('it')">Register Now</button>
+        </div>
+        <div class="reg-form" id="form-it">
+          <h3>Register — IT Course</h3>
+          <input type="text" id="it-name" placeholder="Full name *" required />
+          <input type="email" id="it-email" placeholder="Email *" required />
+          <input type="tel" id="it-phone" placeholder="Phone (optional)" />
+          <button class="btn-submit-reg" onclick="submitReg('it', 'IT Course')">Submit Registration</button>
+          <p class="reg-msg" id="it-msg"></p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INFO STRIP -->
+  <section class="info-strip">
+    <div class="info-strip-inner">
+      <h3>Have questions about the courses?</h3>
+      <p>
+        Reach us at <a href="mailto:maccollab25@gmail.com">maccollab25@gmail.com</a> or come visit us at maccollab in Brașov.<br/>
+        Spots are limited — reserve yours early!
+      </p>
+    </div>
+  </section>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    emailjs.init('pCeuUl7FpFgAbdqZO');
+
+    const MAX_SPOTS = 12;
+    // Financial Education: Aug 8 2026, every 2 weeks
+    // IT Course: Aug 15 2026, every 2 weeks (offset by 1 week)
+    const FIN_BASE = new Date('2026-08-08');
+    const IT_BASE  = new Date('2026-08-15');
+
+    function getNextDate(baseDate) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const d = new Date(baseDate);
+      while (d < today) d.setDate(d.getDate() + 14);
+      return d;
+    }
+
+    function fmtDate(d) {
+      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+
+    function getSpots(id) {
+      const v = localStorage.getItem('maccollab_spots_' + id);
+      return v !== null ? parseInt(v) : MAX_SPOTS;
+    }
+
+    function updateUI() {
+      const finNext = getNextDate(FIN_BASE);
+      const itNext  = getNextDate(IT_BASE);
+      document.getElementById('fin-date-text').textContent = 'Every other Saturday · Next: ' + fmtDate(finNext);
+      document.getElementById('it-date-text').textContent  = 'Every other Saturday · Next: ' + fmtDate(itNext);
+      document.getElementById('fin-spots').textContent = getSpots('fin') + ' / ' + MAX_SPOTS;
+      document.getElementById('it-spots').textContent  = getSpots('it')  + ' / ' + MAX_SPOTS;
+    }
+
+    updateUI();
+
+    function toggleForm(id) {
+      const form = document.getElementById('form-' + id);
+      form.classList.toggle('open');
+      const btn = form.previousElementSibling.querySelector('.btn-inscrie');
+      btn.textContent = form.classList.contains('open') ? 'Cancel' : 'Register Now';
+    }
+
+    function submitReg(id, courseName) {
+      const name  = document.getElementById(id + '-name').value.trim();
+      const email = document.getElementById(id + '-email').value.trim();
+      const phone = document.getElementById(id + '-phone').value.trim();
+      const msgEl = document.getElementById(id + '-msg');
+      const btn   = msgEl.previousElementSibling;
+
+      msgEl.className = 'reg-msg';
+      msgEl.textContent = '';
+
+      if (!name || !email) {
+        msgEl.className = 'reg-msg error';
+        msgEl.textContent = 'Please fill in your name and email.';
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        msgEl.className = 'reg-msg error';
+        msgEl.textContent = 'Invalid email address.';
+        return;
+      }
+
+      const base      = id === 'fin' ? FIN_BASE : IT_BASE;
+      const nextDate  = fmtDate(getNextDate(base));
+      const priceNote = new Date() <= new Date('2026-08-31') ? '50 lei / person (August offer)' : '100 lei / person';
+
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      const subject = `Course registration: ${courseName} – ${name}`;
+      const message = `Course: ${courseName}\nNext session: ${nextDate}\nPrice: ${priceNote}\nName: ${name}\nEmail: ${email}\nPhone: ${phone || '—'}`;
+
+      emailjs.send('service_160291d', 'template_dkgb3vs', {
+        subject,
+        message,
+        from_name: name,
+        reply_to: email,
+        to_email: 'maccollab25@gmail.com',
+      }).then(() => {
+        msgEl.className = 'reg-msg success';
+        msgEl.textContent = 'Registration sent! We will get back to you soon.';
+        btn.textContent = 'Sent ✓';
+        // decrement spots
+        const newSpots = Math.max(0, getSpots(id) - 1);
+        localStorage.setItem('maccollab_spots_' + id, newSpots);
+        document.getElementById(id + '-spots').textContent = newSpots + ' / ' + MAX_SPOTS;
+        document.getElementById(id + '-name').value  = '';
+        document.getElementById(id + '-email').value = '';
+        document.getElementById(id + '-phone').value = '';
+      }).catch(err => {
+        console.error('[cursuri] EmailJS error:', err);
+        msgEl.className = 'reg-msg error';
+        msgEl.textContent = 'Something went wrong. Please try again or contact us directly.';
+        btn.disabled = false;
+        btn.textContent = 'Submit Registration';
+      });
+    }
+
+    // hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    if (hamburger) {
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        navLinks.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>
