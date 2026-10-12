@@ -72,6 +72,11 @@
   transition: opacity 0.3s ease;
 }
 
+.gallery-main img.fit-contain {
+  object-fit: contain;
+  transform: scale(1.35);
+}
+
 .gallery-thumbs {
   display: flex;
   gap: 10px;

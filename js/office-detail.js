@@ -31,7 +31,9 @@ let _galleryIdx = 0;
 
 function setMain(thumb) {
   _galleryIdx = _thumbs.indexOf(thumb);
-  document.getElementById('mainPhoto').src = thumb.src;
+  const main = document.getElementById('mainPhoto');
+  main.src = thumb.src;
+  main.classList.toggle('fit-contain', thumb.dataset.fit === 'contain');
   _thumbs.forEach(t => t.classList.remove('active'));
   thumb.classList.add('active');
 }
