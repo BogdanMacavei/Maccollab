@@ -72,19 +72,6 @@ emailjs.init('pCeuUl7FpFgAbdqZO');
   });
 })();
 
-/* ─── ATENA BANNER: hide on scroll ─────────────────── */
-(function () {
-  const banner = document.querySelector('.atena-banner');
-  if (!banner) return;
-  window.addEventListener('scroll', function () {
-    if (window.scrollY > 80) {
-      banner.classList.add('hidden');
-    } else {
-      banner.classList.remove('hidden');
-    }
-  }, { passive: true });
-})();
-
 /* ─── NAVBAR: scroll state & hamburger ─────────────── */
 (function () {
   const navbar    = document.getElementById('navbar');

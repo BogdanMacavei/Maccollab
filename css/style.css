@@ -1166,21 +1166,9 @@ a.office-card:hover .office-link { text-decoration: underline; }
    ATENA SPORT BANNER
    ══════════════════════════════════════════════════════ */
 .atena-banner {
-  position: fixed;
-  top: 72px;
-  left: 0;
-  right: 0;
-  z-index: 999;
-  background: rgba(26, 20, 100, 0.55);
-  backdrop-filter: blur(6px);
-  padding: 8px 0;
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.atena-banner.hidden {
-  opacity: 0;
-  transform: translateY(-100%);
-  pointer-events: none;
+  display: block;
+  background: #2a2170;
+  padding: 28px 0;
 }
 
 .atena-banner-inner {
