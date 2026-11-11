@@ -51,13 +51,13 @@ function _galleryNav(dir) {
 
   const prev = document.createElement('button');
   prev.className = 'gallery-arrow gallery-prev';
-  prev.setAttribute('aria-label', 'Previous photo');
+  prev.setAttribute('aria-label', t('Previous photo'));
   prev.innerHTML = arrowSvg(-1);
   prev.addEventListener('click', () => _galleryNav(-1));
 
   const next = document.createElement('button');
   next.className = 'gallery-arrow gallery-next';
-  next.setAttribute('aria-label', 'Next photo');
+  next.setAttribute('aria-label', t('Next photo'));
   next.innerHTML = arrowSvg(1);
   next.addEventListener('click', () => _galleryNav(1));
 
@@ -110,7 +110,7 @@ document.getElementById('navbar').classList.add('scrolled');
               <option value="Private Desk – 6 desks">Private Desk – 6 desks</option>
               <option value="Private Office – 1–2 desks">Private Office – 1–2 desks</option>
               <option value="Small Office – 4–5 desks">Small Office – 4–5 desks</option>
-              <option value="Large Office – 9–12 desks">Large Office – 9–12 desks</option>
+              <option value="Large Office – 9–14 desks">Large Office – 9–14 desks</option>
             </select>
           </div>
         </div>
@@ -135,6 +135,7 @@ document.getElementById('navbar').classList.add('scrolled');
       </form>
     </div>`;
   document.body.appendChild(modal);
+  translateTree(modal);
 
   const tourDateInput = document.getElementById('tourDateInput');
   const tourOfficeTypeSelect = document.getElementById('tourOfficeTypeSelect');
@@ -172,12 +173,12 @@ document.getElementById('navbar').classList.add('scrolled');
       notes: this.querySelector('[name="notes"]').value.trim(),
     };
     if (!body.name || !body.email || !body.date || !body.time) {
-      msgEl.textContent = 'Please fill in all required fields.';
+      msgEl.textContent = t('Please fill in all required fields.');
       msgEl.className = 'form-msg error';
       return;
     }
     const btn = this.querySelector('[type="submit"]');
-    btn.disabled = true; btn.textContent = 'Sending…';
+    btn.disabled = true; btn.textContent = t('Sending…');
     const subject = `New Tour Booking from ${body.name} – Maccollab`;
     const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone || '—'}<br><strong>Interested In:</strong> ${body.officeType || '—'}<br><strong>Date:</strong> ${body.date}<br><strong>Time:</strong> ${body.time}<br><strong>Notes:</strong> ${body.notes || '—'}`;
     try {
@@ -185,9 +186,9 @@ document.getElementById('navbar').classList.add('scrolled');
       const tourData = { name: body.name, email: body.email, phone: body.phone, date: body.date, time: body.time, officeType: body.officeType, notes: body.notes };
       this.reset(); closeModal();
       postToServer('/api/book-tour', tourData);
-      showSuccessPopup('Tour booked! We will confirm your visit by email.');
-    } catch (err) { console.error(err); msgEl.textContent = 'Something went wrong. Please try again.'; msgEl.className = 'form-msg error'; }
-    finally { btn.disabled = false; btn.textContent = 'Confirm Booking'; }
+      showSuccessPopup(t('Tour booked! We will confirm your visit by email.'));
+    } catch (err) { console.error(err); msgEl.textContent = t('Something went wrong. Please try again.'); msgEl.className = 'form-msg error'; }
+    finally { btn.disabled = false; btn.textContent = t('Confirm Booking'); }
   });
 })();
 
@@ -228,6 +229,7 @@ document.getElementById('navbar').classList.add('scrolled');
       </form>
     </div>`;
   document.body.appendChild(modal);
+  translateTree(modal);
 
   function openOfferModal()  { modal.classList.add('open');    document.body.style.overflow = 'hidden'; }
   function closeOfferModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
@@ -243,7 +245,7 @@ document.getElementById('navbar').classList.add('scrolled');
       document.getElementById('offerOfficeTypeInput').value = officeType;
       const display = document.getElementById('offerOfficeTypeDisplay');
       if (officeType) {
-        display.innerHTML = `<span class="offer-office-badge">${officeType}</span>`;
+        display.innerHTML = `<span class="offer-office-badge">${t(officeType)}</span>`;
         display.style.display = 'block';
       } else {
         display.style.display = 'none';
@@ -263,20 +265,20 @@ document.getElementById('navbar').classList.add('scrolled');
       message:    this.querySelector('[name="message"]').value.trim(),
     };
     if (!body.name || !body.email || !body.phone) {
-      msgEl.textContent = 'Name, email and phone are required.';
+      msgEl.textContent = t('Name, email and phone are required.');
       msgEl.className = 'form-msg error';
       return;
     }
     const btn = this.querySelector('[type="submit"]');
-    btn.disabled = true; btn.textContent = 'Sending…';
+    btn.disabled = true; btn.textContent = t('Sending…');
     const subject = `New Offer Request from ${body.name} – Maccollab`;
     const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Office Type:</strong> ${body.officeType || '—'}<br><strong>Notes:</strong> ${body.message || '—'}`;
     try {
       await emailjs.send('service_160291d', 'template_dkgb3vs', { subject, message, email: body.email });
       this.reset(); closeOfferModal();
-      showSuccessPopup('Thank you! We will prepare a custom offer for you.');
-    } catch (err) { console.error(err); msgEl.textContent = 'Something went wrong. Please try again.'; msgEl.className = 'form-msg error'; }
-    finally { btn.disabled = false; btn.textContent = 'Send Offer Request'; }
+      showSuccessPopup(t('Thank you! We will prepare a custom offer for you.'));
+    } catch (err) { console.error(err); msgEl.textContent = t('Something went wrong. Please try again.'); msgEl.className = 'form-msg error'; }
+    finally { btn.disabled = false; btn.textContent = t('Send Offer Request'); }
   });
 })();
 
@@ -333,6 +335,7 @@ document.getElementById('navbar').classList.add('scrolled');
       </form>
     </div>`;
   document.body.appendChild(modal);
+  translateTree(modal);
 
   const startDateInput = document.getElementById('deskStartDate');
   const endDateInput   = document.getElementById('deskEndDate');
@@ -383,12 +386,12 @@ document.getElementById('navbar').classList.add('scrolled');
       message:   `Desks: ${this.querySelector('[name="deskCount"]').value} | Start: ${this.querySelector('[name="startDate"]').value} | End: ${this.querySelector('[name="endDate"]').value}. ${this.querySelector('[name="message"]').value.trim()}`,
     };
     if (!body.name || !body.email || !body.phone || !body.teamSize || !this.querySelector('[name="startDate"]').value || !this.querySelector('[name="endDate"]').value) {
-      msgEl.textContent = 'Please fill in all required fields.';
+      msgEl.textContent = t('Please fill in all required fields.');
       msgEl.className = 'form-msg error';
       return;
     }
     const btn = this.querySelector('[type="submit"]');
-    btn.disabled = true; btn.textContent = 'Sending…';
+    btn.disabled = true; btn.textContent = t('Sending…');
     const subject = `New Desk Booking from ${body.name} – Maccollab`;
     const deskStart = this.querySelector('[name="startDate"]').value;
     const deskEnd   = this.querySelector('[name="endDate"]').value;
@@ -398,9 +401,9 @@ document.getElementById('navbar').classList.add('scrolled');
     try {
       await emailjs.send('service_160291d', 'template_dkgb3vs', { subject, message, email: body.email });
       this.reset(); closeDeskModal();
-      showSuccessPopup('Desk booked! We will confirm your reservation by email.');
-    } catch (err) { console.error(err); msgEl.textContent = 'Something went wrong. Please try again.'; msgEl.className = 'form-msg error'; }
-    finally { btn.disabled = false; btn.textContent = 'Book Desk'; }
+      showSuccessPopup(t('Desk booked! We will confirm your reservation by email.'));
+    } catch (err) { console.error(err); msgEl.textContent = t('Something went wrong. Please try again.'); msgEl.className = 'form-msg error'; }
+    finally { btn.disabled = false; btn.textContent = t('Book Desk'); }
   });
 })();
 
@@ -465,6 +468,7 @@ document.getElementById('navbar').classList.add('scrolled');
       </form>
     </div>`;
   document.body.appendChild(modal);
+  translateTree(modal);
 
   const confDateInput = document.getElementById('confDate');
 
@@ -496,12 +500,12 @@ document.getElementById('navbar').classList.add('scrolled');
       message:    `Date: ${this.querySelector('[name="confDate"]').value} | Start: ${this.querySelector('[name="confTime"]').value} | Duration: ${this.querySelector('[name="duration"]').value}. ${this.querySelector('[name="notes"]').value.trim()}`,
     };
     if (!body.name || !body.email || !body.phone || !this.querySelector('[name="confDate"]').value || !this.querySelector('[name="confTime"]').value || !this.querySelector('[name="duration"]').value) {
-      msgEl.textContent = 'Please fill in all required fields.';
+      msgEl.textContent = t('Please fill in all required fields.');
       msgEl.className = 'form-msg error';
       return;
     }
     const btn = this.querySelector('[type="submit"]');
-    btn.disabled = true; btn.textContent = 'Sending…';
+    btn.disabled = true; btn.textContent = t('Sending…');
     const subject = `Conference Room Booking from ${body.name} – Maccollab`;
     const confDate = this.querySelector('[name="confDate"]').value;
     const confTime = this.querySelector('[name="confTime"]').value;
@@ -513,8 +517,42 @@ document.getElementById('navbar').classList.add('scrolled');
     try {
       await emailjs.send('service_160291d', 'template_dkgb3vs', { subject, message, email: body.email });
       this.reset(); closeConfModal();
-      showSuccessPopup('Booking received! We will confirm by email.');
-    } catch (err) { console.error(err); msgEl.textContent = 'Something went wrong. Please try again.'; msgEl.className = 'form-msg error'; }
-    finally { btn.disabled = false; btn.textContent = 'Book Conference Room'; }
+      showSuccessPopup(t('Booking received! We will confirm by email.'));
+    } catch (err) { console.error(err); msgEl.textContent = t('Something went wrong. Please try again.'); msgEl.className = 'form-msg error'; }
+    finally { btn.disabled = false; btn.textContent = t('Book Conference Room'); }
   });
 })();
+
+/* ── Success popup (same as main.js; detail pages don't load main.js) ── */
+function showSuccessPopup(text) {
+  let popup = document.getElementById('successPopup');
+  if (!popup) {
+    popup = document.createElement('div');
+    popup.id = 'successPopup';
+    popup.className = 'success-popup-overlay';
+    popup.innerHTML = `
+      <div class="success-popup-box">
+        <div class="success-popup-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+        </div>
+        <p class="success-popup-text"></p>
+        <button class="btn btn-primary success-popup-btn">OK</button>
+      </div>`;
+    document.body.appendChild(popup);
+    popup.querySelector('.success-popup-btn').addEventListener('click', closeSuccessPopup);
+    popup.addEventListener('click', e => { if (e.target === popup) closeSuccessPopup(); });
+  }
+  popup.querySelector('.success-popup-text').textContent = t(text);
+  popup.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  clearTimeout(popup._timer);
+  popup._timer = setTimeout(closeSuccessPopup, 4000);
+}
+
+function closeSuccessPopup() {
+  const popup = document.getElementById('successPopup');
+  if (popup) { popup.classList.remove('open'); document.body.style.overflow = ''; }
+}

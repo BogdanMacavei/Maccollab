@@ -1,16 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ro">
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="images/image (3).svg" />
   <link rel="shortcut icon" type="image/svg+xml" href="images/image (3).svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Maccollab – Flexible Office Spaces in Brașov. Private offices, small offices, and team suites for freelancers, startups, and growing businesses." />
-  <title>Maccollab</title>
+  <meta name="description" content="Birouri de închiriat și spațiu de coworking în Brașov, pe Strada Horia 22a. Birouri private, birouri pentru echipe, loc dedicat în coworking și sală de conferințe, cu acces 24/7." />
+  <title>Maccollab – Birouri de închiriat și Coworking în Brașov</title>
   <link rel="canonical" href="https://maccollab.com/" />
+  <link rel="alternate" hreflang="ro" href="https://maccollab.com/" />
+  <link rel="alternate" hreflang="en" href="https://maccollab.com/en/" />
+  <link rel="alternate" hreflang="x-default" href="https://maccollab.com/" />
   <meta property="og:site_name" content="Maccollab" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ro_RO" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:url" content="https://maccollab.com/" />
+  <meta property="og:title" content="Maccollab – Birouri de închiriat și Coworking în Brașov" />
+  <meta property="og:description" content="Birouri de închiriat și spațiu de coworking în Brașov, pe Strada Horia 22a. Birouri private, birouri pentru echipe, loc dedicat în coworking și sală de conferințe, cu acces 24/7." />
+  <meta property="og:image" content="https://maccollab.com/images/web/IMG_0930-HDR.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
   <script type="application/ld+json">
-  {"@context": "https://schema.org", "@type": "WebSite", "name": "Maccollab", "url": "https://maccollab.com/"}
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://maccollab.com/#website",
+        "name": "Maccollab",
+        "url": "https://maccollab.com/",
+        "inLanguage": "ro"
+      },
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://maccollab.com/#business",
+        "name": "Maccollab",
+        "description": "Birouri de închiriat și spațiu de coworking în Brașov, pe Strada Horia 22a. Birouri private, birouri pentru echipe, loc dedicat în coworking și sală de conferințe, cu acces 24/7.",
+        "url": "https://maccollab.com/",
+        "image": [
+          "https://maccollab.com/images/web/IMG_0930-HDR.jpg",
+          "https://maccollab.com/images/web/IMG_4333.jpg",
+          "https://maccollab.com/images/web/IMG_0960-HDR.jpg"
+        ],
+        "logo": "https://maccollab.com/images/image%20(3).svg",
+        "telephone": "+40731624845",
+        "email": "office@maccollab.com",
+        "priceRange": "€€",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Strada Horia 22A",
+          "addressLocality": "Brașov",
+          "postalCode": "500045",
+          "addressRegion": "Brașov",
+          "addressCountry": "RO"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 45.651936,
+          "longitude": 25.582317
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+          ],
+          "opens": "00:00",
+          "closes": "23:59"
+        },
+        "sameAs": [
+          "https://www.facebook.com/people/Maccollab/61588798223014/",
+          "https://www.instagram.com/maccollab/",
+          "https://www.linkedin.com/company/112835216/"
+        ]
+      }
+    ]
+  }
   </script>
 
   <!-- Google Fonts -->
@@ -30,15 +100,16 @@
         Maccollab
       </a>
       <nav class="nav-links" id="navLinks">
-        <a href="#about">About</a>
-        <a href="#offices">Offices</a>
-        <a href="#facilities">Facilities</a>
-        <a href="#why">Our Mission</a>
-        <a href="cursuri.html">Courses</a>
+        <a href="#about">Despre</a>
+        <a href="#offices">Birouri</a>
+        <a href="#facilities">Facilități</a>
+        <a href="#why">Misiunea noastră</a>
+        <a href="cursuri.html">Cursuri</a>
         <a href="#contact">Contact</a>
       </nav>
-      <a href="#" class="btn btn-primary nav-cta" data-action="book-tour">Book a Tour</a>
-      <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <a href="#" class="btn btn-primary nav-cta" data-action="book-tour">Programează o vizită</a>
+      <div class="lang-switch"><span class="active">RO</span><span class="sep">|</span><a href="en/" hreflang="en" lang="en">EN</a></div>
+      <button class="hamburger" id="hamburger" aria-label="Deschide meniul">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -47,13 +118,13 @@
   <!-- ═══════════════════════════════ HERO ════════════════════════════════ -->
   <section class="hero" id="hero">
     <div class="hero-overlay"></div>
-    <img src="images/IMG_0930-HDR.jpg" alt="maccollab office interior" class="hero-img" />
+    <img src="images/web/IMG_0930-HDR.jpg" alt="Interior birou Maccollab Brașov" class="hero-img" fetchpriority="high" />
     <div class="hero-content">
-      <h1 class="hero-title">Flexible Office Spaces<br />in Brașov</h1>
-      <p class="hero-sub">Work smarter in a space designed for productivity and growth</p>
+      <h1 class="hero-title">Birouri flexibile<br />în Brașov</h1>
+      <p class="hero-sub">Lucrează mai bine într-un spațiu gândit pentru productivitate și creștere</p>
       <div class="hero-btns">
-        <a href="#" class="btn btn-light" data-action="book-choose">Book</a>
-        <a href="#offices" class="btn btn-outline-light">View Offices</a>
+        <a href="#" class="btn btn-light" data-action="book-choose">Rezervă</a>
+        <a href="#offices" class="btn btn-outline-light">Vezi birourile</a>
       </div>
     </div>
   </section>
@@ -62,12 +133,12 @@
   <section class="section about" id="about">
     <div class="container about-grid">
       <div class="about-text">
-        <p class="section-label">About maccollab</p>
-        <h2>A Modern Office Hub Built for Flexibility</h2>
+        <p class="section-label">Despre Maccollab</p>
+        <h2>Un hub modern de birouri, construit pentru flexibilitate</h2>
         <p class="about-desc">
-          maccollab is an office building in Brașov, designed for professionals who value
-          comfort, productivity, and community. Whether you're a solo freelancer or a growing
-          team, our flexible spaces adapt to your needs—so you can focus on what matters most.
+          Maccollab este o clădire de birouri din Brașov, gândită pentru profesioniștii care pun preț pe
+          confort, productivitate și comunitate. Fie că lucrezi singur ca freelancer sau ai o echipă în creștere,
+          spațiile noastre flexibile se adaptează nevoilor tale — ca să te poți concentra pe ce contează cu adevărat.
         </p>
         <div class="about-stats">
           <div class="stat-item">
@@ -75,8 +146,8 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
             </div>
             <div>
-              <h4>Natural Light</h4>
-              <p>Bright, sun-filled spaces designed to keep you energised and focused all day.</p>
+              <h4>Lumină naturală</h4>
+              <p>Spații luminoase, pline de soare, care te țin energizat și concentrat toată ziua.</p>
             </div>
           </div>
           <div class="stat-item">
@@ -84,8 +155,8 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
             <div>
-              <h4>Community</h4>
-              <p>Join a thriving network of freelancers, startups, and growing businesses.</p>
+              <h4>Comunitate</h4>
+              <p>Alătură-te unei rețele active de freelanceri, startup-uri și companii în creștere.</p>
             </div>
           </div>
           <div class="stat-item">
@@ -94,16 +165,16 @@
             </div>
             <div>
               <h4>Brașov</h4>
-              <p>Centrally located in one of Romania's most dynamic cities.</p>
+              <p>Situat central, într-unul dintre cele mai dinamice orașe din România.</p>
             </div>
           </div>
         </div>
       </div>
       <div class="about-img-wrap">
-        <img src="images/IMG_0933-HDR.jpg" alt="maccollab office interior" class="about-img" />
+        <img src="images/web/IMG_0933-HDR.jpg" alt="Interior birou Maccollab Brașov" loading="lazy" decoding="async" class="about-img" />
         <div class="about-badge">
           <span class="badge-num">4</span>
-          <span class="badge-label">Office Types</span>
+          <span class="badge-label">Tipuri de birouri</span>
         </div>
       </div>
     </div>
@@ -113,100 +184,100 @@
   <section class="section offices" id="offices">
     <div class="container">
       <div class="section-header">
-        <p class="section-label">Office Options</p>
-        <h2>Find Your Perfect Workspace</h2>
-        <p class="section-sub">From private offices to team suites, scale your space as your business grows.</p>
+        <p class="section-label">Opțiuni de birouri</p>
+        <h2>Găsește spațiul de lucru potrivit</h2>
+        <p class="section-sub">De la birouri private la spații pentru echipe, spațiul tău crește odată cu afacerea ta.</p>
       </div>
       <div class="offices-grid">
 
         <div class="office-card">
           <a href="office-small.html" style="text-decoration:none;color:inherit;display:block;">
             <div class="office-img-wrap">
-              <img src="images/IMG_0960-HDR.jpg" alt="Private Desk" />
+              <img src="images/web/IMG_0960-HDR.jpg" alt="Birou dedicat în coworking Brașov" loading="lazy" decoding="async" />
               <span class="desk-badge">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                6 desks
+                6 locuri
               </span>
             </div>
             <div class="office-info">
-              <h3>Private Desk</h3>
-              <span class="office-tag">Coworking area</span>
-              <p>Your own dedicated desk in a vibrant shared workspace.</p>
+              <h3>Birou dedicat</h3>
+              <span class="office-tag">Zonă de coworking</span>
+              <p>Locul tău dedicat, într-un spațiu de lucru comun plin de energie.</p>
             </div>
           </a>
           <div class="office-card-actions">
-            <a href="office-small.html" class="office-link">View details →</a>
-            <a href="#" class="btn btn-primary btn-sm" data-action="book-desk">Book a Desk</a>
+            <a href="office-small.html" class="office-link">Vezi detalii →</a>
+            <a href="#" class="btn btn-primary btn-sm" data-action="book-desk">Rezervă un loc</a>
           </div>
         </div>
 
         <a href="office-private.html" class="office-card">
           <div class="office-img-wrap">
-            <img src="images/IMG_0861-HDR.jpg" alt="Private Office" />
+            <img src="images/web/IMG_0861-HDR.jpg" alt="Birou privat de închiriat în Brașov" loading="lazy" decoding="async" />
             <span class="desk-badge">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-              1–2 desks
+              1–2 locuri
             </span>
           </div>
           <div class="office-info">
-            <h3>Private Office</h3>
-            <span class="office-tag">Solo professionals</span>
-            <p>A quiet, focused workspace perfect for independent work.</p>
-            <span class="office-link">View details →</span>
+            <h3>Birou privat</h3>
+            <span class="office-tag">Profesioniști independenți</span>
+            <p>Un spațiu liniștit, ideal pentru lucrul individual și concentrare.</p>
+            <span class="office-link">Vezi detalii →</span>
           </div>
         </a>
 
         <a href="office-medium.html" class="office-card">
           <div class="office-img-wrap">
-            <img src="images/IMG_0903-HDR.jpg" alt="Small Office" />
+            <img src="images/web/IMG_0903-HDR.jpg" alt="Birou mic pentru echipe în Brașov" loading="lazy" decoding="async" />
             <span class="desk-badge">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              4–5 desks
+              4–5 locuri
             </span>
           </div>
           <div class="office-info">
-            <h3>Small Office</h3>
-            <span class="office-tag">Small teams</span>
-            <p>A private office for small teams who need focus and space to grow.</p>
-            <span class="office-link">View details →</span>
+            <h3>Birou mic</h3>
+            <span class="office-tag">Echipe mici</span>
+            <p>Un birou privat pentru echipe mici, care au nevoie de concentrare și loc să crească.</p>
+            <span class="office-link">Vezi detalii →</span>
           </div>
         </a>
 
         <a href="office-large.html" class="office-card">
           <div class="office-img-wrap">
-            <img src="images/IMG_0930-HDR.jpg" alt="Large Office" />
+            <img src="images/web/IMG_0930-HDR.jpg" alt="Birou mare pentru echipe în Brașov" loading="lazy" decoding="async" />
             <span class="desk-badge">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              9–14 desks
+              9–14 locuri
             </span>
           </div>
           <div class="office-info">
-            <h3>Large Office</h3>
-            <span class="office-tag">Larger teams</span>
-            <p>Spacious environment for established teams and projects.</p>
-            <span class="office-link">View details →</span>
+            <h3>Birou mare</h3>
+            <span class="office-tag">Echipe mari</span>
+            <p>Un spațiu generos pentru echipe și proiecte consolidate.</p>
+            <span class="office-link">Vezi detalii →</span>
           </div>
         </a>
 
         <a href="office-conference.html" class="office-card">
           <div class="office-img-wrap">
-            <img src="images/IMG_4333.jpg" alt="Conference Room" />
+            <img src="images/web/IMG_4333.jpg" alt="Sală de conferințe de închiriat în Brașov" loading="lazy" decoding="async" />
             <span class="desk-badge">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-              Book Now
+              Rezervă acum
             </span>
           </div>
           <div class="office-info">
-            <h3>Conference Room</h3>
-            <span class="office-tag">Meetings &amp; presentations</span>
-            <p>Fully equipped meeting room available for booking by anyone.</p>
-            <span class="office-link">View details →</span>
+            <h3>Sală de conferințe</h3>
+            <span class="office-tag">Întâlniri și prezentări</span>
+            <p>Sală de ședințe complet echipată, pe care o poate rezerva oricine.</p>
+            <span class="office-link">Vezi detalii →</span>
           </div>
         </a>
 
       </div>
       <div class="section-cta">
-        <a href="#" class="btn btn-primary" data-action="request-offer">Request an Offer</a>
+        <a href="#" class="btn btn-primary" data-action="request-offer">Cere o ofertă</a>
       </div>
     </div>
   </section>
@@ -215,12 +286,12 @@
   <section class="section facilities" id="facilities">
     <div class="container">
       <div class="section-header">
-        <p class="section-label">Facilities &amp; Amenities</p>
-        <h2>Everything You Need, Under One Roof</h2>
+        <p class="section-label">Facilități și dotări</p>
+        <h2>Tot ce ai nevoie, sub același acoperiș</h2>
       </div>
       <div class="facilities-photos">
-        <img src="images/IMG_4333.jpg" alt="Conference Room" class="fac-photo" />
-        <img src="images/image00011.jpeg" alt="Shared Kitchen" class="fac-photo" />
+        <img src="images/web/IMG_4333.jpg" alt="Sala de conferințe Maccollab" loading="lazy" decoding="async" class="fac-photo" />
+        <img src="images/web/image00011.jpeg" alt="Bucătăria comună Maccollab" loading="lazy" decoding="async" class="fac-photo" />
       </div>
       <div class="facilities-grid">
         <div class="fac-item">
@@ -228,8 +299,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
           </div>
           <div>
-            <h4>Conference Room</h4>
-            <p>Fully equipped and bookable for meetings and presentations.</p>
+            <h4>Sală de conferințe</h4>
+            <p>Complet echipată și disponibilă pentru întâlniri și prezentări.</p>
           </div>
         </div>
         <div class="fac-item">
@@ -237,8 +308,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" x2="6" y1="2" y2="4"/><line x1="10" x2="10" y1="2" y2="4"/><line x1="14" x2="14" y1="2" y2="4"/></svg>
           </div>
           <div>
-            <h4>Shared Kitchen</h4>
-            <p>Modern kitchen with coffee, appliances, and a social lounge.</p>
+            <h4>Bucătărie comună</h4>
+            <p>Bucătărie modernă, cu cafea, electrocasnice și un lounge pentru socializare.</p>
           </div>
         </div>
         <div class="fac-item">
@@ -246,8 +317,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m4 4 2.5 2.5"/><path d="M13.5 6.5a4.95 4.95 0 0 0-7 7"/><path d="M15 5 5 15"/><path d="M14 17v.01"/><path d="M10 16v.01"/><path d="M13 13v.01"/><path d="M16 10v.01"/><path d="M11 20v.01"/><path d="M17 14v.01"/><path d="M20 11v.01"/></svg>
           </div>
           <div>
-            <h4>Bathrooms</h4>
-            <p>Clean, well-maintained bathrooms available throughout the space.</p>
+            <h4>Grupuri sanitare</h4>
+            <p>Băi curate și bine întreținute, disponibile în tot spațiul.</p>
           </div>
         </div>
         <div class="fac-item">
@@ -255,8 +326,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
           </div>
           <div>
-            <h4>High-Speed Internet</h4>
-            <p>Enterprise-grade connectivity throughout the building.</p>
+            <h4>Internet de mare viteză</h4>
+            <p>Conexiune de nivel enterprise în toată clădirea.</p>
           </div>
         </div>
         <div class="fac-item">
@@ -264,8 +335,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
           </div>
           <div>
-            <h4>Cleaning Services</h4>
-            <p>Professional daily cleaning for a spotless workspace.</p>
+            <h4>Servicii de curățenie</h4>
+            <p>Curățenie profesională zilnică, pentru un spațiu de lucru impecabil.</p>
           </div>
         </div>
         <div class="fac-item">
@@ -273,8 +344,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </div>
           <div>
-            <h4>24/7 Access</h4>
-            <p>Work on your own schedule with round-the-clock building access.</p>
+            <h4>Acces 24/7</h4>
+            <p>Lucrezi după propriul program, cu acces în clădire non-stop.</p>
           </div>
         </div>
         <div class="fac-item">
@@ -282,8 +353,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           </div>
           <div>
-            <h4>Secured Location</h4>
-            <p>24/7 security with controlled access and monitored entry points for your peace of mind.</p>
+            <h4>Locație securizată</h4>
+            <p>Securitate 24/7, cu acces controlat și intrări monitorizate, pentru liniștea ta.</p>
           </div>
         </div>
         <div class="fac-item">
@@ -291,8 +362,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12"/><path d="M5 3a7 7 0 0 0 7 7 7 7 0 0 0 7-7"/><path d="M5 3h14"/><path d="M5 3a7 7 0 0 0 7 7"/></svg>
           </div>
           <div>
-            <h4>Interior Garden</h4>
-            <p>A lush, beautifully designed outdoor garden that brings nature into your workday and creates a calming atmosphere.</p>
+            <h4>Grădină interioară</h4>
+            <p>O grădină bogată și frumos amenajată, care aduce natura în ziua ta de lucru și creează o atmosferă relaxantă.</p>
           </div>
         </div>
       </div>
@@ -303,38 +374,38 @@
   <section class="section why" id="why">
     <div class="container">
       <div class="section-header why-header">
-        <p class="section-label label-light">Our Mission</p>
-        <h2>More Than Just a Workspace</h2>
-        <p class="section-sub">We are a social enterprise built to support young people from the Brașov region in building a professional future.</p>
+        <p class="section-label label-light">Misiunea noastră</p>
+        <h2>Mai mult decât un spațiu de lucru</h2>
+        <p class="section-sub">Suntem o întreprindere socială creată pentru a-i sprijini pe tinerii din regiunea Brașov să își construiască un viitor profesional.</p>
       </div>
       <div class="why-grid">
         <div class="why-item">
           <div class="why-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
-          <h3>Social Mission</h3>
-          <p>We support young people from the Central Region in their transition to an active and independent professional life, with a focus on those from vulnerable backgrounds.</p>
+          <h3>Misiune socială</h3>
+          <p>Îi sprijinim pe tinerii din Regiunea Centru în tranziția către o viață profesională activă și independentă, cu accent pe cei din medii vulnerabile.</p>
         </div>
         <div class="why-item">
           <div class="why-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
           </div>
-          <h3>Education & Courses</h3>
-          <p>We organise workshops and courses in IT, economics and personal development. Students facing financial hardship receive a free place — because equal opportunities matter.</p>
+          <h3>Educație și cursuri</h3>
+          <p>Organizăm ateliere și cursuri de IT, economie și dezvoltare personală. Elevii și studenții cu dificultăți financiare primesc un loc gratuit — pentru că egalitatea de șanse contează.</p>
         </div>
         <div class="why-item">
           <div class="why-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
           </div>
-          <h3>Free Monthly Access</h3>
-          <p>Every month, one person from a vulnerable background receives completely free access to our office — dedicated desk, internet, coffee, tea, and all facilities included.</p>
+          <h3>Acces gratuit lunar</h3>
+          <p>În fiecare lună, o persoană dintr-un mediu vulnerabil primește acces complet gratuit la biroul nostru — loc dedicat, internet, cafea, ceai și toate facilitățile incluse.</p>
         </div>
         <div class="why-item">
           <div class="why-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M12 8v4l3 3"/><path d="M2.5 8.5s2-3 9.5-3 9.5 3 9.5 3"/></svg>
           </div>
-          <h3>Sustainable & Green</h3>
-          <p>Our space is powered by functional solar panels and guided by eco-friendly values — a modern, responsible environment that reduces CO₂ emissions while you work.</p>
+          <h3>Sustenabil și verde</h3>
+          <p>Spațiul nostru este alimentat de panouri solare funcționale și ghidat de valori eco-friendly — un mediu modern și responsabil, care reduce emisiile de CO₂ în timp ce lucrezi.</p>
         </div>
       </div>
     </div>
@@ -344,8 +415,8 @@
   <section class="section testimonials" id="testimonials">
     <div class="container">
       <div class="section-header">
-        <p class="section-label">Testimonials</p>
-        <h2>What Our Members Say</h2>
+        <p class="section-label">Recenzii</p>
+        <h2>Ce spun membrii noștri</h2>
       </div>
       <div class="testimonials-grid">
         <div class="testi-card">
@@ -353,7 +424,7 @@
           <p>"Am descoperit locația în cadrul unui eveniment. Foarte potrivită pentru acest scop, frumoasă și spațioasă, dar ce m-a impresionat e spațiul și conceptul de coworking, cred ca e o oportunitate buna de a întâlni oameni noi, de a face munca „de acasă” less lonely și din punctul meu de vedere e echipat cu toate cele necesare. 🤍"</p>
           <div class="testi-author">
             <strong>Raluca Pîrvu</strong>
-            <span>Google review</span>
+            <span>Recenzie Google</span>
           </div>
         </div>
         <div class="testi-card">
@@ -361,7 +432,7 @@
           <p>"Really cool coworking space with all the amenities you need. The kitchen has water and coffee, and the balcony is perfect for getting some fresh air during breaks. Great overall vibe, and both the hosts and the other people working there were super friendly. Definitely a place to come back to!"</p>
           <div class="testi-author">
             <strong>Ricardo Sequeira</strong>
-            <span>Google review</span>
+            <span>Recenzie Google</span>
           </div>
         </div>
         <div class="testi-card">
@@ -369,7 +440,7 @@
           <p>"O locație deosebită, primitoare, caldă, modernă și foarte luminoasă. Un spațiu ideal pentru studiu, întâlniri, prezentări sau team building. Recomand cu încredere."</p>
           <div class="testi-author">
             <strong>Iuliana Minodora Duru</strong>
-            <span>Google review</span>
+            <span>Recenzie Google</span>
           </div>
         </div>
       </div>
@@ -380,78 +451,78 @@
   <section class="section faq" id="faq">
     <div class="container faq-wrap">
       <div class="section-header">
-        <p class="section-label">FAQ</p>
-        <h2>Frequently Asked Questions</h2>
+        <p class="section-label">Întrebări</p>
+        <h2>Întrebări frecvente</h2>
       </div>
       <div class="faq-list">
 
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
-            What types of offices are available?
+            Ce tipuri de birouri sunt disponibile?
             <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <div class="faq-a">
-            <p>We offer Private Offices (1–2 desks), Private Desks (coworking), Small Offices (4–5 desks), and Large Offices (9–14 desks). All spaces come fully furnished and ready to use from day one.</p>
+            <p>Oferim birouri private (1–2 locuri), locuri dedicate în zona de coworking, birouri mici (4–5 locuri) și birouri mari (9–14 locuri). Toate spațiile sunt complet mobilate și gata de folosit din prima zi.</p>
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
-            Are there flexible lease terms?
+            Există contracte flexibile?
             <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <div class="faq-a">
-            <p>Yes! We offer monthly contracts with no long-term commitments. You can upgrade or downgrade your office size as your team grows or changes.</p>
+            <p>Da! Oferim contracte lunare, fără angajamente pe termen lung. Poți trece la un birou mai mare sau mai mic pe măsură ce echipa ta crește sau se schimbă.</p>
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
-            Can I book the conference room?
+            Pot rezerva sala de conferințe?
             <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <div class="faq-a">
-            <p>Absolutely. The conference room is available to both members and non-members and can be booked in advance. It's fully equipped with AV technology for meetings and presentations.</p>
+            <p>Desigur. Sala de conferințe este disponibilă atât pentru membri, cât și pentru non-membri și poate fi rezervată în avans. Este complet echipată cu tehnologie audio-video pentru întâlniri și prezentări.</p>
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
-            Is there parking available?
+            Există loc de parcare?
             <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <div class="faq-a">
-            <p>Yes, parking is available. Free parking is provided on the street where the building is located and is generally available to visitors. Should you require any additional information regarding parking arrangements, please feel free to contact us directly.</p>
+            <p>Da. Parcarea este gratuită pe strada pe care se află clădirea și, de regulă, sunt locuri disponibile pentru vizitatori. Pentru orice alte informații despre parcare, nu ezita să ne contactezi direct.</p>
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
-            What's included in the rent?
+            Ce este inclus în chirie?
             <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <div class="faq-a">
-            <p>Your rent covers the furnished office space, high-speed internet, daily cleaning services, access to the shared kitchen, bathrooms, and use of common areas. Conference room bookings may be subject to availability.</p>
+            <p>Chiria include biroul mobilat, internet de mare viteză, curățenie zilnică, acces la bucătăria comună, grupurile sanitare și spațiile comune. Rezervările sălii de conferințe se fac în funcție de disponibilitate.</p>
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
-            Can I host events at Maccollab?
+            Pot organiza evenimente la Maccollab?
             <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <div class="faq-a">
-            <p>Yes! Our conference room and common areas can be used for hosting events, workshops, and meetings. Get in touch with us to check availability and discuss your specific needs.</p>
+            <p>Da! Sala de conferințe și spațiile comune pot fi folosite pentru evenimente, ateliere și întâlniri. Contactează-ne ca să verificăm disponibilitatea și să discutăm despre nevoile tale.</p>
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
-            Can I visit before signing a contract?
+            Pot vizita spațiul înainte să semnez contractul?
             <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <div class="faq-a">
-            <p>Of course! We encourage you to schedule a tour first. Use the contact form below or call us directly to arrange a visit at a time that works for you.</p>
+            <p>Sigur! Te încurajăm să programezi mai întâi o vizită. Folosește formularul de mai jos sau sună-ne direct ca să stabilim o vizită la o oră care ți se potrivește.</p>
           </div>
         </div>
 
@@ -463,23 +534,23 @@
   <section class="section contact" id="contact">
     <div class="container contact-grid">
       <div class="contact-form-col">
-        <p class="section-label">Get in Touch</p>
-        <h2>Schedule a Visit or<br />Request an Offer</h2>
-        <p class="section-sub">Ready to find your new office? Reach out and we'll help you get started.</p>
+        <p class="section-label">Contact</p>
+        <h2>Programează o vizită sau<br />cere o ofertă</h2>
+        <p class="section-sub">Cauți un birou nou? Scrie-ne și te ajutăm să începi.</p>
         <form class="contact-form" id="contactForm" novalidate>
           <div class="form-group">
-            <input type="text" name="name" placeholder="Your Name" required autocomplete="name" />
+            <input type="text" name="name" placeholder="Numele tău" required autocomplete="name" />
           </div>
           <div class="form-group">
-            <input type="email" name="email" placeholder="Email Address" required autocomplete="email" />
+            <input type="email" name="email" placeholder="Adresa de email" required autocomplete="email" />
           </div>
           <div class="form-group">
-            <input type="tel" name="phone" placeholder="Phone Number (optional)" autocomplete="tel" />
+            <input type="tel" name="phone" placeholder="Număr de telefon (opțional)" autocomplete="tel" />
           </div>
           <div class="form-group">
-            <textarea name="message" rows="5" placeholder="Tell us about your needs…" required></textarea>
+            <textarea name="message" rows="5" placeholder="Spune-ne de ce ai nevoie…" required></textarea>
           </div>
-          <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+          <button type="submit" class="btn btn-primary btn-full">Trimite mesajul</button>
           <p class="form-msg" id="formMsg"></p>
         </form>
       </div>
@@ -490,7 +561,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44 2 2 0 0 1 3.59 1.25h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
             </div>
             <div>
-              <h4>Phone</h4>
+              <h4>Telefon</h4>
               <p>+40 731 624 845</p>
             </div>
           </div>
@@ -508,7 +579,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             </div>
             <div>
-              <h4>Location</h4>
+              <h4>Locație</h4>
               <p>Strada Horia 22a, Brașov</p>
               <p class="muted">România</p>
             </div>
@@ -547,9 +618,9 @@
         Maccollab
       </a>
       <nav class="footer-nav">
-        <a href="#about">About</a>
-        <a href="#offices">Offices</a>
-        <a href="#facilities">Facilities</a>
+        <a href="#about">Despre</a>
+        <a href="#offices">Birouri</a>
+        <a href="#facilities">Facilități</a>
         <a href="#contact">Contact</a>
       </nav>
       <div class="footer-social">
@@ -563,11 +634,12 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
         </a>
       </div>
-      <span class="footer-copy">© 2026 maccollab. All rights reserved.</span>
+      <span class="footer-copy">© 2026 Maccollab. Toate drepturile rezervate.</span>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="js/i18n.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

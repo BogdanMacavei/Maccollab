@@ -17,27 +17,28 @@ emailjs.init('pCeuUl7FpFgAbdqZO');
           <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
         </svg>
       </button>
-      <p class="section-label">Rezervare</p>
-      <h2>Ce dorești să rezervi?</h2>
+      <p class="section-label">Booking</p>
+      <h2>What would you like to book?</h2>
       <div class="book-choose-options">
         <button class="book-choose-card" data-choose="tour">
           <div class="book-choose-icon">🏢</div>
           <div class="book-choose-label">Book a Tour</div>
-          <div class="book-choose-sub">Vizitează spațiile noastre</div>
+          <div class="book-choose-sub">Visit our spaces</div>
         </button>
         <button class="book-choose-card" data-choose="desk">
           <div class="book-choose-icon">🪑</div>
           <div class="book-choose-label">Book a Desk</div>
-          <div class="book-choose-sub">Rezervă un birou dedicat</div>
+          <div class="book-choose-sub">Reserve a dedicated desk</div>
         </button>
         <button class="book-choose-card" data-choose="conference">
           <div class="book-choose-icon">🎤</div>
           <div class="book-choose-label">Conference Room</div>
-          <div class="book-choose-sub">Rezervă sala de conferințe</div>
+          <div class="book-choose-sub">Book the conference room</div>
         </button>
       </div>
     </div>`;
   document.body.appendChild(modal);
+  translateTree(modal);
 
   function openChoose()  { modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
   function closeChoose() { modal.classList.remove('open'); document.body.style.overflow = ''; }
@@ -226,7 +227,7 @@ document.querySelectorAll('img').forEach(img => {
               <option value="Private Desk – 6 desks">Private Desk – 6 desks</option>
               <option value="Private Office – 1–2 desks">Private Office – 1–2 desks</option>
               <option value="Small Office – 4–5 desks">Small Office – 4–5 desks</option>
-              <option value="Large Office – 9–12 desks">Large Office – 9–12 desks</option>
+              <option value="Large Office – 9–14 desks">Large Office – 9–14 desks</option>
             </select>
           </div>
         </div>
@@ -255,6 +256,7 @@ document.querySelectorAll('img').forEach(img => {
       </form>
     </div>`;
   document.body.appendChild(modal);
+  translateTree(modal);
 
   // Open modal
   function openModal() {
@@ -373,6 +375,7 @@ document.querySelectorAll('img').forEach(img => {
       </form>
     </div>`;
   document.body.appendChild(modal);
+  translateTree(modal);
 
   function openModal()  { document.getElementById('deskMainDate').min = getTodayStr(); document.getElementById('deskMainDate').value = getTodayStr(); modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
   function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
@@ -474,6 +477,7 @@ document.querySelectorAll('img').forEach(img => {
       </form>
     </div>`;
   document.body.appendChild(modal);
+  translateTree(modal);
 
   function openModal()  { document.getElementById('confMainDate').min = getTodayStr(); document.getElementById('confMainDate').value = getTodayStr(); modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
   function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
@@ -544,7 +548,7 @@ document.querySelectorAll('img').forEach(img => {
               <option value="Private Desk – 6 desks">Private Desk – 6 desks</option>
               <option value="Private Office – 1–2 desks">Private Office – 1–2 desks</option>
               <option value="Small Office – 4–5 desks">Small Office – 4–5 desks</option>
-              <option value="Large Office – 9–12 desks">Large Office – 9–12 desks</option>
+              <option value="Large Office – 9–14 desks">Large Office – 9–14 desks</option>
             </select>
           </div>
         </div>
@@ -556,6 +560,7 @@ document.querySelectorAll('img').forEach(img => {
       </form>
     </div>`;
   document.body.appendChild(modal);
+  translateTree(modal);
 
   function openModal()  { modal.classList.add('open');    document.body.style.overflow = 'hidden'; }
   function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
@@ -598,7 +603,7 @@ document.querySelectorAll('img').forEach(img => {
    SHARED HELPERS
    ══════════════════════════════════════════════════════ */
 function showMsg(el, text, type) {
-  el.textContent = text;
+  el.textContent = t(text);
   el.className   = 'form-msg ' + type;
 }
 
@@ -623,7 +628,7 @@ function showSuccessPopup(text) {
     popup.querySelector('.success-popup-btn').addEventListener('click', closeSuccessPopup);
     popup.addEventListener('click', e => { if (e.target === popup) closeSuccessPopup(); });
   }
-  popup.querySelector('.success-popup-text').textContent = text;
+  popup.querySelector('.success-popup-text').textContent = t(text);
   popup.classList.add('open');
   document.body.style.overflow = 'hidden';
   clearTimeout(popup._timer);
@@ -666,7 +671,7 @@ async function submitForm(subject, messageHtml, replyEmail, form, msgEl, success
   const btn = form.querySelector('[type="submit"]');
   const originalText = btn.textContent;
   btn.disabled    = true;
-  btn.textContent = 'Sending…';
+  btn.textContent = t('Sending…');
 
   try {
     await emailjs.send('service_160291d', 'template_dkgb3vs', {
@@ -680,7 +685,7 @@ async function submitForm(subject, messageHtml, replyEmail, form, msgEl, success
   } catch (err) {
     console.error('EmailJS error:', err);
     const detail = err && (err.text || err.message || JSON.stringify(err));
-    showMsg(msgEl, `Error: ${detail}`, 'error');
+    showMsg(msgEl, `${t('Error')}: ${detail}`, 'error');
     return false;
   } finally {
     btn.disabled    = false;
