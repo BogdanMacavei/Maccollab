@@ -343,13 +343,13 @@ p { color: var(--text-muted); font-size: 0.975rem; line-height: 1.7; }
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 720px;
+  max-width: 860px;
   padding: 0 24px;
 }
 
 .hero-title {
   color: var(--white);
-  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  font-size: clamp(2rem, 5vw, 3.6rem);
   font-weight: 700;
   margin-bottom: 20px;
   text-shadow: 0 2px 16px rgba(0,0,0,0.25);
@@ -991,6 +991,19 @@ a.office-card:hover .office-link { text-decoration: underline; }
 
 .footer-social { display: flex; gap: 12px; align-items: center; }
 
+.footer-contact {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.8;
+}
+.footer-contact a { color: rgba(255,255,255,0.75); text-decoration: none; }
+.footer-contact a:hover { color: var(--white); }
+.footer-contact .sep { margin: 0 8px; opacity: 0.5; }
+
 .social-icon {
   display: flex;
   align-items: center;
@@ -1328,6 +1341,7 @@ a.office-card:hover .office-link { text-decoration: underline; }
 
   /* Hero */
   .hero { min-height: 520px; }
+  .hero-title br { display: none; }
   .hero-btns { flex-direction: column; align-items: center; }
   .hero-btns .btn { width: 220px; }
 
