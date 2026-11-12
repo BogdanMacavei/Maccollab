@@ -162,6 +162,17 @@ p { color: var(--text-muted); font-size: 0.975rem; line-height: 1.7; }
   transform: translateY(-1px);
 }
 
+.btn-outline {
+  background: transparent;
+  color: var(--burgundy);
+  border-color: var(--burgundy);
+}
+.btn-outline:hover {
+  background: var(--burgundy);
+  color: var(--white);
+  transform: translateY(-1px);
+}
+
 .btn-full { width: 100%; }
 
 /* ─── DIVIDER LINE ──────────────────────────────────── */
@@ -749,6 +760,14 @@ a.office-card:hover .office-link { text-decoration: underline; }
 }
 
 .testi-card:hover { transform: translateY(-4px); }
+
+.testi-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 40px;
+}
 
 .stars {
   color: var(--burgundy);
