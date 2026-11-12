@@ -420,7 +420,7 @@ p { color: var(--text-muted); font-size: 0.975rem; line-height: 1.7; }
   flex-shrink: 0;
 }
 
-.stat-item h4 { margin-bottom: 4px; font-size: 1rem; }
+.stat-item h3 { margin-bottom: 4px; font-size: 1rem; }
 .stat-item p { font-size: 0.88rem; }
 
 .about-img-wrap {
@@ -687,7 +687,7 @@ a.office-card:hover .office-link { text-decoration: underline; }
   flex-shrink: 0;
 }
 
-.fac-item h4 { margin-bottom: 4px; }
+.fac-item h3 { margin-bottom: 4px; font-size: 1rem; }
 .fac-item p { font-size: 0.875rem; }
 
 /* ══════════════════════════════════════════════════════
@@ -912,7 +912,7 @@ a.office-card:hover .office-link { text-decoration: underline; }
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
-.contact-item h4 { margin-bottom: 3px; font-size: 0.95rem; }
+.contact-item h3 { margin-bottom: 3px; font-size: 0.95rem; }
 .contact-item p { font-size: 0.9rem; color: var(--text); }
 .contact-item .muted { color: var(--text-muted); font-size: 0.82rem; margin-top: 2px; }
 

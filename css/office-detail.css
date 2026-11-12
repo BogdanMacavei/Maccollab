@@ -150,6 +150,7 @@
 
 .amenities-title {
   font-size: 1.2rem;
+  font-weight: 600;
   margin-bottom: 24px;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--border);
@@ -182,7 +183,7 @@
   flex-shrink: 0;
 }
 
-.amenity-item h4 { font-size: 0.9rem; margin-bottom: 3px; }
+.amenity-item h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 3px; }
 .amenity-item p  { font-size: 0.82rem; }
 
 /* Sidebar */
@@ -406,7 +407,7 @@
   border-radius: var(--radius);
   padding: 28px 32px;
 }
-.detail-cta h3 { margin: 0 0 6px; font-size: 1.2rem; }
+.detail-cta h2 { margin: 0 0 6px; font-size: 1.2rem; font-weight: 600; }
 .detail-cta p { margin: 0; color: var(--text-muted); font-size: 0.92rem; }
 .detail-cta-btns { display: flex; gap: 12px; flex-wrap: wrap; }
 @media (max-width: 640px) {
