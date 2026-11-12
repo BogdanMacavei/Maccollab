@@ -163,7 +163,7 @@ p { color: var(--text-muted); font-size: 0.975rem; line-height: 1.7; }
 }
 
 .btn-outline {
-  background: transparent;
+  background: var(--white);
   color: var(--burgundy);
   border-color: var(--burgundy);
 }
@@ -767,6 +767,11 @@ a.office-card:hover .office-link { text-decoration: underline; }
   justify-content: center;
   gap: 12px;
   margin-top: 40px;
+}
+.testi-actions .btn {
+  min-width: 250px;
+  padding: 15px 28px;
+  box-shadow: var(--shadow);
 }
 
 .stars {
