@@ -115,7 +115,7 @@ document.getElementById('navbar').classList.add('scrolled');
           </div>
         </div>
         <div class="form-row">
-          <div class="form-group"><input type="date" name="date" required id="tourDateInput" /></div>
+          <div class="form-group"><input type="date" name="date" required id="tourDateInput" aria-label="Preferred date" /></div>
           <div class="form-group">
             <select name="time" required>
               <option value="">Preferred Time *</option>

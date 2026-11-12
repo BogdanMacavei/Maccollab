@@ -233,7 +233,7 @@ document.querySelectorAll('img').forEach(img => {
         </div>
         <div class="form-row">
           <div class="form-group">
-            <input type="date" name="date" required id="mainTourDate" min="${getTodayStr()}" />
+            <input type="date" name="date" required id="mainTourDate" aria-label="Preferred date" min="${getTodayStr()}" />
           </div>
           <div class="form-group">
             <select name="time" required>

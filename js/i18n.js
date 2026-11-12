@@ -41,6 +41,7 @@ const RO = {
   'Interested in… (optional)': 'Ce te interesează… (opțional)',
   'Interested in…': 'Ce te interesează…',
   'Preferred Time *': 'Ora preferată *',
+  'Preferred date': 'Data preferată',
   'Any questions or notes…': 'Întrebări sau observații…',
   'Confirm Booking': 'Confirmă programarea',
   '08:00 AM': '08:00', '09:00 AM': '09:00', '10:00 AM': '10:00', '11:00 AM': '11:00', '12:00 PM': '12:00',
@@ -101,19 +102,57 @@ function t(text) {
   return LANG === 'ro' && Object.prototype.hasOwnProperty.call(RO, text) ? RO[text] : text;
 }
 
-/* Translate visible text, placeholders and aria-labels inside an element built from English templates. */
+/* Translate visible text, placeholders and aria-labels inside an element built from English templates,
+   then give dialogs and form fields accessible names. */
 function translateTree(root) {
-  if (LANG !== 'ro' || !root) return;
-  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-  for (let node = walker.nextNode(); node; node = walker.nextNode()) {
-    const raw = node.nodeValue;
-    const key = raw.trim();
-    if (key && RO[key]) node.nodeValue = raw.replace(key, RO[key]);
-  }
-  root.querySelectorAll('[placeholder], [aria-label]').forEach(el => {
-    ['placeholder', 'aria-label'].forEach(attr => {
-      const v = el.getAttribute(attr);
-      if (v && RO[v]) el.setAttribute(attr, RO[v]);
+  if (!root) return;
+  if (LANG === 'ro') {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+      const raw = node.nodeValue;
+      const key = raw.trim();
+      if (key && RO[key]) node.nodeValue = raw.replace(key, RO[key]);
+    }
+    root.querySelectorAll('[placeholder], [aria-label]').forEach(el => {
+      ['placeholder', 'aria-label'].forEach(attr => {
+        const v = el.getAttribute(attr);
+        if (v && RO[v]) el.setAttribute(attr, RO[v]);
+      });
     });
+  }
+  fixA11y(root);
+}
+
+/* Accessibility: name modal dialogs after their heading and make sure every form field has a label. */
+let _a11yId = 0;
+function fixA11y(root) {
+  if (!root) return;
+  const ensureId = (el, prefix) => el.id || (el.id = `${prefix}-${++_a11yId}`);
+  const clean = s => (s || '').replace(/[*…]/g, '').replace(/\((optional|opțional)\)/i, '').trim();
+
+  const dialogs = root.matches && root.matches('[aria-modal]') ? [root] : [];
+  dialogs.push(...root.querySelectorAll('[aria-modal]'));
+  dialogs.forEach(d => {
+    if (!d.getAttribute('role')) d.setAttribute('role', 'dialog');
+    const heading = d.querySelector('h1, h2, h3');
+    if (heading && !d.hasAttribute('aria-labelledby') && !d.hasAttribute('aria-label')) {
+      d.setAttribute('aria-labelledby', ensureId(heading, 'dlg-title'));
+    }
+  });
+
+  root.querySelectorAll('input:not([type="hidden"]):not([type="submit"]):not([type="button"]), select, textarea').forEach(el => {
+    if (el.hasAttribute('aria-label') || el.hasAttribute('aria-labelledby') || el.closest('label')) return;
+    if (el.id && root.querySelector(`label[for="${el.id}"]`)) return;
+    const prev = el.previousElementSibling;
+    if (prev && prev.tagName === 'LABEL' && !prev.htmlFor) {
+      prev.htmlFor = ensureId(el, 'field');
+      return;
+    }
+    const name = clean(el.getAttribute('placeholder')) ||
+      (el.tagName === 'SELECT' && el.options.length ? clean(el.options[0].text) : '') ||
+      el.name;
+    if (name) el.setAttribute('aria-label', name);
   });
 }
+
+document.addEventListener('DOMContentLoaded', () => fixA11y(document.body));
