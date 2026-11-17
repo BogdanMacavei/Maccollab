@@ -416,3 +416,9 @@
 }
 
 .amenities-grid { margin-bottom: 40px; }
+
+.sidebar-seats {
+  margin: -4px 0 12px;
+  font-size: 0.85rem;
+  color: var(--text-muted, #777);
+}
