@@ -565,6 +565,12 @@ p { color: var(--text-muted); font-size: 0.975rem; line-height: 1.7; }
   color: var(--text-muted, #888);
 }
 
+.office-info .office-price {
+  display: block;
+  margin: 12px 0 0;
+  font-size: 1rem;
+}
+
 .price-sep {
   color: var(--text-muted, #bbb);
   font-weight: 400;
