@@ -375,6 +375,46 @@ app.post('/api/book-conference', apiLimiter, async (req, res) => {
   res.json({ ok: true, message: 'Booking received! We will confirm by email.' });
 });
 
+/* ─── COMMUNITY CHAT (local copy of the Apps Script chat) ─
+   Messages live in data/chat.json. Set "hidden": true on a
+   message to remove it from the page. */
+const CHAT_FILE = path.join(__dirname, 'data', 'chat.json');
+
+function readChat() {
+  ensureDataDir();
+  if (!fs.existsSync(CHAT_FILE)) return [];
+  return JSON.parse(fs.readFileSync(CHAT_FILE, 'utf8'));
+}
+
+function cleanChat(str, max) {
+  return String(str || '').replace(/\s+/g, ' ').trim().slice(0, max);
+}
+
+const chatLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 3,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { ok: false, error: 'busy' },
+});
+
+app.get('/api/chat', (req, res) => {
+  const list = readChat().filter(m => !m.hidden).slice(-50)
+    .map(({ id, ts, name, text }) => ({ id, ts, name, text }));
+  res.json({ ok: true, messages: list });
+});
+
+app.post('/api/chat', chatLimiter, (req, res) => {
+  const name = cleanChat(req.body.name, 40);
+  const text = cleanChat(req.body.text, 500);
+  if (!name || !text) return res.status(400).json({ ok: false, error: 'empty' });
+  if (/(https?:\/\/|www\.)/i.test(text)) return res.status(400).json({ ok: false, error: 'links' });
+  const list = readChat();
+  list.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), ts: new Date().toISOString(), name, text, hidden: false });
+  fs.writeFileSync(CHAT_FILE, JSON.stringify(list, null, 2));
+  res.json({ ok: true });
+});
+
 /* ─── GET /api/submissions (simple admin read) ────────── */
 app.get('/api/submissions', (req, res) => {
   const list = readSubmissions();
@@ -394,5 +434,6 @@ app.listen(PORT, () => {
   console.log(`   → Book a tour:   POST /api/book-tour`);
   console.log(`   → Request offer: POST /api/request-offer`);
   console.log(`   → Submissions:   GET  /api/submissions`);
+  console.log(`   → Community chat: GET/POST /api/chat`);
   console.log(`\n   Press Ctrl+C to stop.\n`);
 });

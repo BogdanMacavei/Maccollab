@@ -270,7 +270,8 @@ p { color: var(--text-muted); font-size: 0.975rem; line-height: 1.7; }
 .navbar.scrolled .nav-links a { color: var(--text-muted); }
 .navbar.scrolled .nav-links a:hover { color: var(--burgundy); }
 
-.nav-cta { margin-left: 12px; }
+.nav-cta { margin-left: 12px; white-space: nowrap; }
+.nav-links a { white-space: nowrap; }
 
 .lang-switch {
   display: flex;
@@ -766,6 +767,30 @@ a.office-card:hover .office-link { text-decoration: underline; }
 }
 
 .testi-card:hover { transform: translateY(-4px); }
+
+.stat-link {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--burgundy);
+}
+.stat-link:hover { text-decoration: underline; }
+
+.testimonials .rating-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  padding: 8px 16px;
+  background: var(--white);
+  border-radius: 999px;
+  color: var(--text);
+  font-size: 0.9rem;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+}
+.testimonials .rating-summary .stars { color: var(--burgundy); letter-spacing: 1px; margin: 0; font-size: 1rem; line-height: 1; }
 
 .testi-actions {
   display: flex;
@@ -1272,10 +1297,13 @@ a.office-card:hover .office-link { text-decoration: underline; }
   .contact-grid { grid-template-columns: 1fr; gap: 48px; }
 }
 
-@media (max-width: 768px) {
-  .section { padding: 72px 0; }
+@media (max-width: 1280px) {
+  .nav-inner { gap: 24px; }
+  .nav-links { gap: 22px; }
+}
 
-  /* Navbar mobile */
+@media (max-width: 1100px) {
+  /* Navbar: hamburger menu until the full menu fits */
   .nav-links {
     position: fixed;
     top: 72px; left: 0; right: 0;
@@ -1291,7 +1319,7 @@ a.office-card:hover .office-link { text-decoration: underline; }
   }
 
   .nav-links.open {
-    max-height: 400px;
+    max-height: 480px;
     padding: 12px 0;
   }
 
@@ -1305,9 +1333,16 @@ a.office-card:hover .office-link { text-decoration: underline; }
 
   .nav-links a:last-child { border-bottom: none; }
 
+  .nav-cta { margin-left: auto; }
+  .lang-switch { margin-left: 8px; }
+  .hamburger { display: flex; margin-left: 0; }
+}
+
+@media (max-width: 768px) {
+  .section { padding: 72px 0; }
+
   .nav-cta { display: none; }
   .lang-switch { margin-left: auto; }
-  .hamburger { display: flex; margin-left: 0; }
 
   /* Hero */
   .hero { min-height: 520px; }

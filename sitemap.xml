@@ -117,4 +117,21 @@
     <lastmod>2026-11-11</lastmod>
     <priority>0.6</priority>
   </url>
+
+  <url>
+    <loc>https://maccollab.com/community.html</loc>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://maccollab.com/community.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maccollab.com/en/community.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maccollab.com/community.html"/>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://maccollab.com/en/community.html</loc>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://maccollab.com/community.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maccollab.com/en/community.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maccollab.com/community.html"/>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+  </url>
 </urlset>

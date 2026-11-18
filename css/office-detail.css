@@ -4,8 +4,7 @@
 
 /* Breadcrumb */
 .breadcrumb-bar {
-  background: var(--cream);
-  border-bottom: 1px solid var(--border);
+  background: var(--burgundy);
   padding: 12px 0;
   margin-top: 72px;
 }
@@ -15,12 +14,12 @@
   align-items: center;
   gap: 8px;
   font-size: 0.82rem;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.6);
 }
 
-.breadcrumb-bar a { color: var(--text-muted); transition: color var(--transition); }
-.breadcrumb-bar a:hover { color: var(--burgundy); }
-.breadcrumb-bar span:last-child { color: var(--text); font-weight: 500; }
+.breadcrumb-bar a { color: rgba(255, 255, 255, 0.75); transition: color var(--transition); }
+.breadcrumb-bar a:hover { color: var(--white); text-decoration: underline; }
+.breadcrumb-bar span:last-child { color: var(--white); font-weight: 500; }
 
 /* Gallery */
 .office-hero {
