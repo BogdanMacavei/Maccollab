@@ -1284,6 +1284,7 @@ a.office-card:hover .office-link { text-decoration: underline; }
 .reveal-group.visible > *:nth-child(6) { opacity: 1; transform: none; transition-delay: 0.5s; }
 .reveal-group.visible > *:nth-child(7) { opacity: 1; transform: none; transition-delay: 0.6s; }
 .reveal-group.visible > *:nth-child(8) { opacity: 1; transform: none; transition-delay: 0.7s; }
+.reveal-group.visible > *:nth-child(n+9) { opacity: 1; transform: none; transition-delay: 0.8s; }
 
 /* ══════════════════════════════════════════════════════
    RESPONSIVE — TABLET
@@ -1377,3 +1378,6 @@ a.office-card:hover .office-link { text-decoration: underline; }
   .about-badge { left: 50%; transform: translateX(-50%); bottom: -24px; }
   .about-img-wrap { padding-bottom: 16px; }
 }
+
+/* VAT notice next to prices */
+.vat-note { text-align: center; margin-top: 28px; font-size: 0.82rem; color: var(--text-muted); }

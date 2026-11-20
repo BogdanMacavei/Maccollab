@@ -421,3 +421,6 @@
   font-size: 0.85rem;
   color: var(--text-muted, #777);
 }
+
+/* VAT notice next to prices */
+.sidebar-card .vat-note { margin: -6px 0 10px; font-size: 0.78rem; color: var(--text-muted); text-align: left; }

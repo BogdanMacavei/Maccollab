@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=7" />
+  <link rel="stylesheet" href="css/style.css?v=9" />
   <style>
     /* ── PAGE ── */
     .cursuri-hero {
@@ -189,8 +189,10 @@
       font-size: 1.6rem;
       font-weight: 800;
       color: var(--burgundy);
+      white-space: nowrap;
     }
     .price-original {
+      white-space: nowrap;
       font-size: 0.9rem;
       color: var(--text-muted);
       text-decoration: line-through;
@@ -323,7 +325,7 @@
   <section class="cursuri-hero">
     <p class="section-label">Maccollab · Brașov</p>
     <h1>Cursuri de weekend</h1>
-    <p>Investește în tine — educație financiară și IT, o dată pe săptămână, în fiecare sâmbătă, în inima Brașovului.</p>
+    <p>Investește în tine — educație financiară și IT în inima Brașovului. În fiecare sâmbătă are loc unul dintre cursuri, pe rând, așa că fiecare curs se ține o dată la două săptămâni.</p>
   </section>
 
   <!-- COURSES -->
@@ -363,9 +365,9 @@
             </span>
           </div>
           <div class="price-row">
-            <span class="price-current">50 lei</span>
-            <span class="price-original">100 lei / persoană</span>
-            <span class="price-badge">Ofertă august</span>
+            <span class="price-current">100 lei / persoană</span>
+            <span class="price-original" style="display:none">100 lei / persoană</span>
+            <span class="price-badge" style="display:none"></span>
           </div>
           <div class="spots-bar">
             <span>Locuri disponibile</span>
@@ -416,9 +418,9 @@
             </span>
           </div>
           <div class="price-row">
-            <span class="price-current">50 lei</span>
-            <span class="price-original">100 lei / persoană</span>
-            <span class="price-badge">Ofertă august</span>
+            <span class="price-current">100 lei / persoană</span>
+            <span class="price-original" style="display:none">100 lei / persoană</span>
+            <span class="price-badge" style="display:none"></span>
           </div>
           <div class="spots-bar">
             <span>Locuri disponibile</span>
@@ -494,6 +496,32 @@
 
     updateUI();
 
+    /* Monthly offer: from the 15th to the end of every month the course costs 50 lei
+       instead of 100 lei, labelled with the current month. From the 1st to the 14th: 100 lei. */
+    const OFFER_MONTHS = ['ianuarie','februarie','martie','aprilie','mai','iunie','iulie','august','septembrie','octombrie','noiembrie','decembrie'];
+    const OFFER_MONTHS_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    function currentOffer(d = new Date()) {
+      return d.getDate() >= 15 ? { m: OFFER_MONTHS[d.getMonth()], en: OFFER_MONTHS_EN[d.getMonth()] } : null;
+    }
+    function applyOffer() {
+      const offer = currentOffer();
+      document.querySelectorAll('.price-row').forEach(row => {
+        const cur = row.querySelector('.price-current'), orig = row.querySelector('.price-original'), badge = row.querySelector('.price-badge');
+        if (offer) {
+          const m = offer.m;
+          cur.textContent = '50 lei';
+          orig.style.display = '';
+          badge.textContent = 'Ofertă ' + m;
+          badge.style.display = '';
+        } else {
+          cur.textContent = '100 lei / persoană';
+          orig.style.display = 'none';
+          badge.style.display = 'none';
+        }
+      });
+    }
+    applyOffer();
+
     function toggleForm(id) {
       const form = document.getElementById('form-' + id);
       form.classList.toggle('open');
@@ -524,7 +552,8 @@
 
       const base      = id === 'fin' ? FIN_BASE : IT_BASE;
       const nextDate  = fmtDate(getNextDate(base));
-      const priceNote = new Date() <= new Date('2026-08-31') ? '50 lei / person (August offer)' : '100 lei / person';
+      const offer     = currentOffer();
+      const priceNote = offer ? '50 lei / person (' + offer.en + ' offer)' : '100 lei / person';
 
       btn.disabled = true;
       btn.textContent = 'Se trimite…';

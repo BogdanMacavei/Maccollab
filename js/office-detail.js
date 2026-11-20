@@ -124,7 +124,7 @@ document.getElementById('navbar').classList.add('scrolled');
           <div class="form-group">
             <select name="officeType" id="tourOfficeTypeSelect">
               <option value="">Interested in…</option>
-              <option value="Private Desk – 6 desks">Private Desk – 6 desks</option>
+              <option value="Dedicated Desk – 6 desks">Dedicated Desk – 6 desks</option>
               <option value="Private Office – 1–2 desks">Private Office – 1–2 desks</option>
               <option value="Small Office – 4–5 desks">Small Office – 4–5 desks</option>
               <option value="Large Office – 9–14 desks">Large Office – 9–14 desks</option>
@@ -311,7 +311,7 @@ document.getElementById('navbar').classList.add('scrolled');
           <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
         </svg>
       </button>
-      <p class="section-label">Private Desk</p>
+      <p class="section-label">Dedicated Desk</p>
       <h2>Book Your Desk</h2>
       <p class="modal-sub">Reserve your dedicated desk in our coworking space. We'll confirm your booking by email.</p>
       <form id="deskForm" novalidate>
@@ -397,7 +397,7 @@ document.getElementById('navbar').classList.add('scrolled');
       name:      this.querySelector('[name="name"]').value.trim(),
       email:     this.querySelector('[name="email"]').value.trim(),
       phone:     this.querySelector('[name="phone"]').value.trim(),
-      officeType: 'Private Desk',
+      officeType: 'Dedicated Desk',
       teamSize:   this.querySelector('[name="deskCount"]').value,
       message:   `Desks: ${this.querySelector('[name="deskCount"]').value} | Start: ${this.querySelector('[name="startDate"]').value} | End: ${this.querySelector('[name="endDate"]').value}. ${this.querySelector('[name="message"]').value.trim()}`,
     };

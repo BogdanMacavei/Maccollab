@@ -23,11 +23,11 @@ const RO = {
   'Book the conference room': 'Rezervă sala de conferințe',
 
   /* office names (offer badge) */
-  'Private Desk': 'Birou dedicat',
+  'Dedicated Desk': 'Birou dedicat',
   'Private Office': 'Birou privat',
   'Small Office': 'Birou mic',
   'Large Office': 'Birou mare',
-  'Private Desk – 6 desks': 'Birou dedicat – 6 locuri',
+  'Dedicated Desk – 6 desks': 'Birou dedicat – 6 locuri',
   'Private Office – 1–2 desks': 'Birou privat – 1–2 locuri',
   'Small Office – 4–5 desks': 'Birou mic – 4–5 locuri',
   'Large Office – 9–14 desks': 'Birou mare – 9–14 locuri',

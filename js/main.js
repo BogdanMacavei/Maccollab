@@ -230,7 +230,7 @@ document.querySelectorAll('img').forEach(img => {
           <div class="form-group">
             <select name="officeType">
               <option value="">Interested in… (optional)</option>
-              <option value="Private Desk – 6 desks">Private Desk – 6 desks</option>
+              <option value="Dedicated Desk – 6 desks">Dedicated Desk – 6 desks</option>
               <option value="Private Office – 1–2 desks">Private Office – 1–2 desks</option>
               <option value="Small Office – 4–5 desks">Small Office – 4–5 desks</option>
               <option value="Large Office – 9–14 desks">Large Office – 9–14 desks</option>
@@ -338,7 +338,7 @@ document.querySelectorAll('img').forEach(img => {
           <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
         </svg>
       </button>
-      <p class="section-label">Private Desk</p>
+      <p class="section-label">Dedicated Desk</p>
       <h2>Book a Desk</h2>
       <p class="modal-sub">Reserve your dedicated desk in our coworking space.</p>
       <form id="deskFormMain" novalidate>
@@ -549,7 +549,7 @@ document.querySelectorAll('img').forEach(img => {
           <div class="form-group">
             <select name="officeType">
               <option value="">Office type (optional)</option>
-              <option value="Private Desk – 6 desks">Private Desk – 6 desks</option>
+              <option value="Dedicated Desk – 6 desks">Dedicated Desk – 6 desks</option>
               <option value="Private Office – 1–2 desks">Private Office – 1–2 desks</option>
               <option value="Small Office – 4–5 desks">Small Office – 4–5 desks</option>
               <option value="Large Office – 9–14 desks">Large Office – 9–14 desks</option>
