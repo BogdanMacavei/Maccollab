@@ -32,7 +32,22 @@
 .location-photo img { display: block; width: 100%; height: auto; border-radius: var(--radius); box-shadow: var(--shadow); }
 .location-photo figcaption { margin-top: 8px; font-size: 0.85rem; color: var(--text-muted); }
 
+.location-list strong { color: var(--text); font-weight: 600; }
+
+.location-h2 { font-family: var(--ff-serif); font-size: clamp(1.4rem, 3vw, 1.8rem); margin: 56px 0 12px; }
+.location-text { max-width: 760px; color: var(--text-muted); margin-bottom: 24px; }
+.entrance-steps { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 20px; align-items: start; }
+.entrance-steps figure { margin: 0; }
+.entrance-steps img { display: block; width: 100%; height: 340px; object-fit: cover; border-radius: var(--radius); box-shadow: var(--shadow); }
+.entrance-steps figcaption { margin-top: 8px; font-size: 0.88rem; font-weight: 500; color: var(--text); }
+.location-page .detail-faq { margin: 0; max-width: 860px; }
+
 .location-cta { margin-top: 56px; }
+@media (max-width: 900px) {
+  .entrance-steps { grid-template-columns: 1fr 1fr; }
+  .entrance-steps figure:first-child { grid-column: 1 / -1; }
+  .entrance-steps img { height: 260px; }
+}
 
 @media (max-width: 900px) {
   .location-grid { grid-template-columns: 1fr; gap: 32px; }
