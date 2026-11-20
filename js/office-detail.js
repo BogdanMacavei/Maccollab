@@ -1,4 +1,10 @@
-emailjs.init('pCeuUl7FpFgAbdqZO');
+/* EmailJS can be blocked (ad-blockers, company firewalls). That must never stop
+   the booking buttons, so the rest of this file runs either way. */
+if (window.emailjs) emailjs.init('pCeuUl7FpFgAbdqZO');
+function sendEmail(params) {
+  if (!window.emailjs) return Promise.reject(new Error('EmailJS not loaded'));
+  return emailjs.send('service_160291d', 'template_dkgb3vs', params);
+}
 
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxbkp4-D2LFR2e8d9sGgA7HJQZA89xFALagbMX7Gd2u1un270tUESZBEc20LDzpjw/exec';
 const IS_LOCAL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
@@ -9,20 +15,31 @@ async function postToServer(endpoint, data) {
 
   if (IS_LOCAL) {
     try {
-      await fetch('http://localhost:3000' + endpoint, {
+      const res = await fetch('http://localhost:3000' + endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
-    } catch (_) {}
-    return;
+      return res.ok;
+    } catch (_) { return false; }
   }
 
-  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'REPLACE_WITH_APPS_SCRIPT_URL') return;
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'REPLACE_WITH_APPS_SCRIPT_URL') return false;
   try {
+    // Apps Script answers with readable JSON, so we know whether the booking reached the calendar
     const url = APPS_SCRIPT_URL + '?data=' + encodeURIComponent(JSON.stringify(payload));
-    await fetch(url, { method: 'GET', mode: 'no-cors' });
-  } catch (_) {}
+    const res = await fetch(url);
+    const json = await res.json();
+    return json.ok === true;
+  } catch (_) { return false; }
+}
+
+/* A booking counts as received if the e-mail OR the calendar entry got through. */
+async function deliverBooking(emailParams, endpoint, data) {
+  const saved = postToServer(endpoint, data);
+  let mailed = false;
+  try { await sendEmail(emailParams); mailed = true; } catch (err) { console.error('EmailJS error:', err); }
+  return mailed || await saved;
 }
 
 /* ── Gallery photo switcher ── */
@@ -181,14 +198,13 @@ document.getElementById('navbar').classList.add('scrolled');
     btn.disabled = true; btn.textContent = t('Sending…');
     const subject = `New Tour Booking from ${body.name} – Maccollab`;
     const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone || '—'}<br><strong>Interested In:</strong> ${body.officeType || '—'}<br><strong>Date:</strong> ${body.date}<br><strong>Time:</strong> ${body.time}<br><strong>Notes:</strong> ${body.notes || '—'}`;
+    const tourData = { name: body.name, email: body.email, phone: body.phone, date: body.date, time: body.time, officeType: body.officeType, notes: body.notes };
     try {
-      await emailjs.send('service_160291d', 'template_dkgb3vs', { subject, message, email: body.email });
-      const tourData = { name: body.name, email: body.email, phone: body.phone, date: body.date, time: body.time, officeType: body.officeType, notes: body.notes };
-      this.reset(); closeModal();
-      postToServer('/api/book-tour', tourData);
-      showSuccessPopup(t('Tour booked! We will confirm your visit by email.'));
-    } catch (err) { console.error(err); msgEl.textContent = t('Something went wrong. Please try again.'); msgEl.className = 'form-msg error'; }
-    finally { btn.disabled = false; btn.textContent = t('Confirm Booking'); }
+      if (await deliverBooking({ subject, message, email: body.email }, '/api/book-tour', tourData)) {
+        this.reset(); closeModal();
+        showSuccessPopup(t('Tour booked! We will confirm your visit by email.'));
+      } else { msgEl.textContent = t('Something went wrong. Please call us at +40 731 624 845 or email office@maccollab.com.'); msgEl.className = 'form-msg error'; }
+    } finally { btn.disabled = false; btn.textContent = t('Confirm Booking'); }
   });
 })();
 
@@ -274,10 +290,10 @@ document.getElementById('navbar').classList.add('scrolled');
     const subject = `New Offer Request from ${body.name} – Maccollab`;
     const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Office Type:</strong> ${body.officeType || '—'}<br><strong>Notes:</strong> ${body.message || '—'}`;
     try {
-      await emailjs.send('service_160291d', 'template_dkgb3vs', { subject, message, email: body.email });
+      await sendEmail({ subject, message, email: body.email });
       this.reset(); closeOfferModal();
       showSuccessPopup(t('Thank you! We will prepare a custom offer for you.'));
-    } catch (err) { console.error(err); msgEl.textContent = t('Something went wrong. Please try again.'); msgEl.className = 'form-msg error'; }
+    } catch (err) { console.error(err); msgEl.textContent = t('Something went wrong. Please call us at +40 731 624 845 or email office@maccollab.com.'); msgEl.className = 'form-msg error'; }
     finally { btn.disabled = false; btn.textContent = t('Send Offer Request'); }
   });
 })();
@@ -397,13 +413,12 @@ document.getElementById('navbar').classList.add('scrolled');
     const deskEnd   = this.querySelector('[name="endDate"]').value;
     const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Desks:</strong> ${this.querySelector('[name="deskCount"]').value}<br><strong>Start Date:</strong> ${deskStart}<br><strong>End Date:</strong> ${deskEnd}<br><strong>Notes:</strong> ${this.querySelector('[name="message"]').value.trim() || '—'}`;
     const deskData = { name: body.name, email: body.email, phone: body.phone, deskCount: this.querySelector('[name="deskCount"]').value, startDate: deskStart, endDate: deskEnd, message: this.querySelector('[name="message"]').value.trim() };
-    postToServer('/api/book-desk', deskData);
     try {
-      await emailjs.send('service_160291d', 'template_dkgb3vs', { subject, message, email: body.email });
-      this.reset(); closeDeskModal();
-      showSuccessPopup(t('Desk booked! We will confirm your reservation by email.'));
-    } catch (err) { console.error(err); msgEl.textContent = t('Something went wrong. Please try again.'); msgEl.className = 'form-msg error'; }
-    finally { btn.disabled = false; btn.textContent = t('Book Desk'); }
+      if (await deliverBooking({ subject, message, email: body.email }, '/api/book-desk', deskData)) {
+        this.reset(); closeDeskModal();
+        showSuccessPopup(t('Desk booked! We will confirm your reservation by email.'));
+      } else { msgEl.textContent = t('Something went wrong. Please call us at +40 731 624 845 or email office@maccollab.com.'); msgEl.className = 'form-msg error'; }
+    } finally { btn.disabled = false; btn.textContent = t('Book Desk'); }
   });
 })();
 
@@ -513,13 +528,12 @@ document.getElementById('navbar').classList.add('scrolled');
     const notes    = this.querySelector('[name="notes"]').value.trim();
     const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Date:</strong> ${confDate}<br><strong>Start Time:</strong> ${confTime}<br><strong>Duration:</strong> ${duration}<br><strong>Notes:</strong> ${notes || '—'}`;
     const confData = { name: body.name, email: body.email, phone: body.phone, confDate, confTime, duration, notes };
-    postToServer('/api/book-conference', confData);
     try {
-      await emailjs.send('service_160291d', 'template_dkgb3vs', { subject, message, email: body.email });
-      this.reset(); closeConfModal();
-      showSuccessPopup(t('Booking received! We will confirm by email.'));
-    } catch (err) { console.error(err); msgEl.textContent = t('Something went wrong. Please try again.'); msgEl.className = 'form-msg error'; }
-    finally { btn.disabled = false; btn.textContent = t('Book Conference Room'); }
+      if (await deliverBooking({ subject, message, email: body.email }, '/api/book-conference', confData)) {
+        this.reset(); closeConfModal();
+        showSuccessPopup(t('Booking received! We will confirm by email.'));
+      } else { msgEl.textContent = t('Something went wrong. Please call us at +40 731 624 845 or email office@maccollab.com.'); msgEl.className = 'form-msg error'; }
+    } finally { btn.disabled = false; btn.textContent = t('Book Conference Room'); }
   });
 })();
 

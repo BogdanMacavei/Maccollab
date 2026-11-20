@@ -90,6 +90,7 @@ const RO = {
   'Please fill in all required fields.': 'Te rugăm să completezi toate câmpurile obligatorii.',
   'Name, email and phone are required.': 'Numele, emailul și telefonul sunt obligatorii.',
   'Something went wrong. Please try again.': 'A apărut o eroare. Te rugăm să încerci din nou.',
+  'Something went wrong. Please call us at +40 731 624 845 or email office@maccollab.com.': 'A apărut o eroare. Sună-ne la +40 731 624 845 sau scrie-ne la office@maccollab.com.',
   'Thank you! We will get back to you shortly.': 'Mulțumim! Revenim către tine în curând.',
   'Tour booked! We will confirm your visit by email.': 'Vizita a fost programată! Îți confirmăm pe email.',
   'Desk booked! We will confirm your reservation by email.': 'Locul a fost rezervat! Îți confirmăm rezervarea pe email.',

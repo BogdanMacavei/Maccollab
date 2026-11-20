@@ -134,4 +134,36 @@
     <lastmod>2026-11-18</lastmod>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://maccollab.com/hot-desk.html</loc>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://maccollab.com/hot-desk.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maccollab.com/en/hot-desk.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maccollab.com/hot-desk.html"/>
+    <lastmod>2026-11-20</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://maccollab.com/en/hot-desk.html</loc>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://maccollab.com/hot-desk.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maccollab.com/en/hot-desk.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maccollab.com/hot-desk.html"/>
+    <lastmod>2026-11-20</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://maccollab.com/location.html</loc>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://maccollab.com/location.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maccollab.com/en/location.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maccollab.com/location.html"/>
+    <lastmod>2026-11-20</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://maccollab.com/en/location.html</loc>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://maccollab.com/location.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maccollab.com/en/location.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maccollab.com/location.html"/>
+    <lastmod>2026-11-20</lastmod>
+    <priority>0.7</priority>
+  </url>
 </urlset>

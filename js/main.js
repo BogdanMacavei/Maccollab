@@ -2,7 +2,13 @@
    MACCOLLAB — MAIN JAVASCRIPT
    ══════════════════════════════════════════════════════ */
 
-emailjs.init('pCeuUl7FpFgAbdqZO');
+/* EmailJS can be blocked (ad-blockers, company firewalls). That must never stop
+   the booking buttons, so the rest of this file runs either way. */
+if (window.emailjs) emailjs.init('pCeuUl7FpFgAbdqZO');
+function sendEmail(params) {
+  if (!window.emailjs) return Promise.reject(new Error('EmailJS not loaded'));
+  return emailjs.send('service_160291d', 'template_dkgb3vs', params);
+}
 
 /* ─── BOOKING CHOICE MODAL ──────────────────────────── */
 (function () {
@@ -307,13 +313,11 @@ document.querySelectorAll('img').forEach(img => {
 
     const subject = `New Tour Booking from ${body.name} – Maccollab`;
     const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone || '—'}<br><strong>Interested In:</strong> ${body.officeType || '—'}<br><strong>Date:</strong> ${body.date}<br><strong>Time:</strong> ${body.time}<br><strong>Notes:</strong> ${body.notes || '—'}`;
+    const saved = postToServer('/api/book-tour', body);
     const ok = await submitForm(subject, message, body.email, tourForm, tourFormMsg,
-      'Tour booked! We will confirm your visit by email.'
+      'Tour booked! We will confirm your visit by email.', saved
     );
-    if (ok) {
-      closeModal();
-      postToServer('/api/book-tour', body);
-    }
+    if (ok) closeModal();
   });
 })();
 
@@ -405,8 +409,8 @@ document.querySelectorAll('img').forEach(img => {
     }
     const subject = `New Desk Booking from ${body.name} – Maccollab`;
     const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Date:</strong> ${body.date}<br><strong>Time:</strong> ${body.time}<br><strong>Notes:</strong> ${body.notes || '—'}`;
-    postToServer('/api/book-desk', { ...body, startDate: body.date, endDate: body.date, deskCount: '1' });
-    const ok = await submitForm(subject, message, body.email, this, msgEl, 'Desk booked! We will confirm your reservation by email.');
+    const saved = postToServer('/api/book-desk', { ...body, startDate: body.date, endDate: body.date, deskCount: '1' });
+    const ok = await submitForm(subject, message, body.email, this, msgEl, 'Desk booked! We will confirm your reservation by email.', saved);
     if (ok) { closeModal(); }
   });
 })();
@@ -509,8 +513,8 @@ document.querySelectorAll('img').forEach(img => {
     }
     const subject = `Conference Room Booking from ${body.name} – Maccollab`;
     const message = `<strong>Name:</strong> ${body.name}<br><strong>Email:</strong> ${body.email}<br><strong>Phone:</strong> ${body.phone}<br><strong>Participants:</strong> ${body.participants}<br><strong>Date:</strong> ${body.confDate}<br><strong>Time:</strong> ${body.confTime}<br><strong>Duration:</strong> ${body.duration}<br><strong>Notes:</strong> ${body.notes || '—'}`;
-    postToServer('/api/book-conference', body);
-    const ok = await submitForm(subject, message, body.email, this, msgEl, 'Booking confirmed! We will get back to you by email.');
+    const saved = postToServer('/api/book-conference', body);
+    const ok = await submitForm(subject, message, body.email, this, msgEl, 'Booking confirmed! We will get back to you by email.', saved);
     if (ok) { closeModal(); }
   });
 })();
@@ -656,37 +660,44 @@ async function postToServer(endpoint, data) {
       });
       const json = await res.json();
       console.log('[Maccollab] local server:', json);
-    } catch (err) { console.warn('[Maccollab] local server not reachable:', err.message); }
-    return;
+      return res.ok && json.ok !== false;
+    } catch (err) { console.warn('[Maccollab] local server not reachable:', err.message); return false; }
   }
 
-  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'REPLACE_WITH_APPS_SCRIPT_URL') return;
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'REPLACE_WITH_APPS_SCRIPT_URL') return false;
   try {
+    // Apps Script answers with readable JSON, so we know whether the booking reached the calendar
     const url = APPS_SCRIPT_URL + '?data=' + encodeURIComponent(JSON.stringify(payload));
-    await fetch(url, { method: 'GET', mode: 'no-cors' });
-  } catch (err) { console.warn('[Maccollab] Apps Script error:', err.message); }
+    const res = await fetch(url);
+    const json = await res.json();
+    return json.ok === true;
+  } catch (err) { console.warn('[Maccollab] Apps Script error:', err.message); return false; }
 }
 
-async function submitForm(subject, messageHtml, replyEmail, form, msgEl, successText) {
+/* calendarSaved: optional promise from postToServer(). A booking counts as received
+   if the e-mail OR the calendar entry got through. */
+async function submitForm(subject, messageHtml, replyEmail, form, msgEl, successText, calendarSaved) {
   const btn = form.querySelector('[type="submit"]');
   const originalText = btn.textContent;
   btn.disabled    = true;
   btn.textContent = t('Sending…');
 
   try {
-    await emailjs.send('service_160291d', 'template_dkgb3vs', {
-      subject: subject,
-      message: messageHtml,
-      email:   replyEmail,
-    });
-    showSuccessPopup(successText);
-    form.reset();
-    return true;
-  } catch (err) {
-    console.error('EmailJS error:', err);
-    const detail = err && (err.text || err.message || JSON.stringify(err));
-    showMsg(msgEl, `${t('Error')}: ${detail}`, 'error');
-    return false;
+    let ok = false;
+    try {
+      await sendEmail({ subject: subject, message: messageHtml, email: replyEmail });
+      ok = true;
+    } catch (err) {
+      console.error('EmailJS error:', err);
+    }
+    if (!ok && calendarSaved) ok = await calendarSaved;
+    if (ok) {
+      showSuccessPopup(successText);
+      form.reset();
+    } else {
+      showMsg(msgEl, t('Something went wrong. Please call us at +40 731 624 845 or email office@maccollab.com.'), 'error');
+    }
+    return ok;
   } finally {
     btn.disabled    = false;
     btn.textContent = originalText;
